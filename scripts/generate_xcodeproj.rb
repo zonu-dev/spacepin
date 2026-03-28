@@ -36,7 +36,7 @@ def configure_common_build_settings(target, bundle_id: nil, skip_install: 'NO')
     config.build_settings['MARKETING_VERSION'] = MARKETING_VERSION
     config.build_settings['CURRENT_PROJECT_VERSION'] = CURRENT_PROJECT_VERSION
     config.build_settings['SKIP_INSTALL'] = skip_install
-    config.build_settings['ENABLE_HARDENED_RUNTIME'] = 'NO'
+    config.build_settings['ENABLE_HARDENED_RUNTIME'] = 'YES'
     config.build_settings['CODE_SIGNING_ALLOWED'] = 'YES'
     config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = bundle_id if bundle_id
     if DEVELOPMENT_TEAM && !DEVELOPMENT_TEAM.empty?
