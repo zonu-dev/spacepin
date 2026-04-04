@@ -9,10 +9,13 @@ struct ManagerView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("SpacePin")
+                Text(L10n.text("app.name", fallback: "SpacePin"))
                     .font(.system(size: 30, weight: .bold, design: .rounded))
 
-                Text("Note pins and image pins stay in their own floating panels across Spaces.")
+                Text(L10n.text(
+                    "manager.subtitle",
+                    fallback: "Note pins and image pins stay in their own floating panels across Spaces."
+                ))
                     .font(.body)
                     .foregroundStyle(.secondary)
             }
@@ -21,18 +24,18 @@ struct ManagerView: View {
                 Button {
                     coordinator.createNotePin()
                 } label: {
-                    Label("New Note Pin", systemImage: "note.text")
+                    Label(L10n.text("action.new_note_pin", fallback: "New Note Pin"), systemImage: "note.text")
                 }
 
                 Button {
                     coordinator.presentImageImporter()
                 } label: {
-                    Label("Import Image", systemImage: "photo")
+                    Label(L10n.text("action.import_image", fallback: "Import Image…"), systemImage: "photo")
                 }
 
                 Spacer()
 
-                Text("\(coordinator.pins.count) active")
+                Text(L10n.format("label.active_count", fallback: "%lld active", Int64(coordinator.pins.count)))
                     .foregroundStyle(.secondary)
             }
 
@@ -81,32 +84,46 @@ private struct DropZoneView: View {
                     .foregroundStyle(isTargeted ? Color.accentColor : Color.secondary.opacity(0.35))
             }
             .overlay(alignment: .leading) {
-                HStack(spacing: 14) {
-                    Image(systemName: "square.and.arrow.down.on.square")
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundStyle(isTargeted ? Color.accentColor : Color.primary)
-
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Drop image files here")
-                            .font(.headline)
-
-                        Text("PNG, JPEG, GIF, HEIC and other formats supported by AppKit can be imported.")
-                            .foregroundStyle(.secondary)
-                    }
-                }
+                DropZoneLabel(isTargeted: isTargeted)
                 .padding(18)
             }
             .frame(height: 96)
     }
 }
 
+private struct DropZoneLabel: View {
+    let isTargeted: Bool
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "square.and.arrow.down.on.square")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(isTargeted ? Color.accentColor : Color.primary)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(L10n.text("label.drop_image_files_here", fallback: "Drop image files here"))
+                    .font(.headline)
+
+                Text(L10n.text(
+                    "label.drop_image_formats",
+                    fallback: "PNG, JPEG, GIF, HEIC and other formats supported by AppKit can be imported."
+                ))
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
 private struct EmptyStateView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("No pins yet")
+            Text(L10n.text("label.no_pins_title", fallback: "No pins yet"))
                 .font(.title3.bold())
 
-            Text("Create a note pin or import an image to open the first floating panel.")
+            Text(L10n.text(
+                "label.no_pins_subtitle",
+                fallback: "Create a note pin or import an image to open the first floating panel."
+            ))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -140,7 +157,9 @@ private struct PinListRow: View {
                         .font(.headline)
                         .lineLimit(1)
 
-                    Text(item.record.kind == .note ? item.notePreview : item.record.sourceDisplayName ?? "Stored image")
+                    Text(item.record.kind == .note
+                        ? item.notePreview
+                        : item.record.sourceDisplayName ?? L10n.text("label.stored_image", fallback: "Stored image"))
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
@@ -148,7 +167,7 @@ private struct PinListRow: View {
 
                 Spacer()
 
-                Button("Show") {
+                Button(L10n.text("action.show", fallback: "Show")) {
                     coordinator.bringToFront(id: item.id)
                 }
                 .buttonStyle(.borderless)
@@ -156,7 +175,7 @@ private struct PinListRow: View {
 
             HStack(spacing: 18) {
                 Toggle(
-                    "Lock",
+                    L10n.text("action.lock", fallback: "Lock"),
                     isOn: Binding(get: {
                         item.record.locked
                     }, set: { newValue in
@@ -166,7 +185,7 @@ private struct PinListRow: View {
                 .toggleStyle(.switch)
 
                 Toggle(
-                    "Click-through",
+                    L10n.text("label.click_through", fallback: "Click-through"),
                     isOn: Binding(get: {
                         item.record.clickThrough
                     }, set: { newValue in
@@ -178,11 +197,11 @@ private struct PinListRow: View {
 
             if item.record.kind == .note {
                 HStack(spacing: 12) {
-                    Text("Color")
+                    Text(L10n.text("label.color", fallback: "Color"))
                         .foregroundStyle(.secondary)
 
                     Picker(
-                        "Color",
+                        L10n.text("label.color", fallback: "Color"),
                         selection: Binding(get: {
                             item.record.noteColorPreset
                         }, set: { newValue in
@@ -194,7 +213,7 @@ private struct PinListRow: View {
                                 Circle()
                                     .fill(preset.swiftUIColor)
                                     .frame(width: 10, height: 10)
-                                Text(preset.displayName)
+                                Text(L10n.noteColorName(preset))
                             }
                             .tag(preset)
                         }
@@ -205,7 +224,7 @@ private struct PinListRow: View {
                 }
 
                 HStack(spacing: 12) {
-                    Text("Font")
+                    Text(L10n.text("label.font", fallback: "Font"))
                         .foregroundStyle(.secondary)
 
                     Slider(
@@ -226,7 +245,7 @@ private struct PinListRow: View {
             }
 
             HStack(spacing: 12) {
-                Text("Opacity")
+                Text(L10n.text("label.opacity", fallback: "Opacity"))
                     .foregroundStyle(.secondary)
 
                 Slider(
@@ -244,11 +263,11 @@ private struct PinListRow: View {
             }
 
             HStack(spacing: 10) {
-                Button("Duplicate") {
+                Button(L10n.text("action.duplicate", fallback: "Duplicate")) {
                     coordinator.duplicatePin(id: item.id)
                 }
 
-                Button("Delete", role: .destructive) {
+                Button(L10n.text("action.delete", fallback: "Delete"), role: .destructive) {
                     coordinator.deletePin(id: item.id)
                 }
             }

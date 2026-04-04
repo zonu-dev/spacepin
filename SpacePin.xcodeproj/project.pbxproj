@@ -7,128 +7,153 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0411624946714FEA9D77E3D1 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 61D06B5DE0E84D03C6A3EBEE /* AppIcon.icns */; };
-		0B4F02D564E48B2E4C175716 /* ImageAssetStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369527DFA77500C8C1186EE4 /* ImageAssetStoreTests.swift */; };
-		14BB8D55F3E44923EB6F4FA7 /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89D130D02ABE8A6669023C9 /* TestSupport.swift */; };
-		1BA8EFDDFE05C8C91628E55C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B625C7A55585E894EC90601C /* Cocoa.framework */; };
-		1F0863B62FE9A7C049225981 /* PinRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC55513C55896DBC1705CF22 /* PinRecord.swift */; };
-		2609BF9658F3FC59028B5B0F /* PinRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BD0E1AC303851A466C8C /* PinRepositoryTests.swift */; };
-		274FDA8B3245D92016317DBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 073A319F70815F369809A378 /* Assets.xcassets */; };
-		45F5335F727368E4AAEB4DAA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B625C7A55585E894EC90601C /* Cocoa.framework */; };
-		5801FBDDC293F84C604A910A /* NoteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CAD22807CF8AAA0A2F2D4F /* NoteTheme.swift */; };
-		5F8B56EAEF71B78B20D1B075 /* PinPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F742A293F31A09A06EEC7E89 /* PinPanel.swift */; };
-		6A92536368A146AB31E2A04D /* PinWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77B8B3D422F68E556782C31 /* PinWindowController.swift */; };
-		6C76C1A060F2479871DAC061 /* libSpacePinCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 321F46B2E11C0CD71045550D /* libSpacePinCore.a */; };
-		76D22E45EB852F4CF68D6745 /* SpacePinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE9A5C9B29307C658CE7188 /* SpacePinApp.swift */; };
-		81B2D304A0E7DBC5BD1D05B9 /* ManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6BDAC6C85D3B14E25190ED /* ManagerWindowController.swift */; };
-		8A75339608E840B47DED6DC1 /* PinRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A5F34DB55C3AFB3DD87E1D /* PinRecordTests.swift */; };
-		92AFC79C4989631144C948F5 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = E14CD493A38BC23C0E6DF212 /* AppIcon.icon */; };
-		93ED7EC2FA885EB33CA1FF78 /* SpacePinPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F5CB71496A10651388ADDA /* SpacePinPaths.swift */; };
-		A6AA4BE774C6EBEDDC65186D /* PinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE2F1AEE7EA64ED067AD0EF /* PinRepository.swift */; };
-		A84D9D4C7B836FDA77E30AC5 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1EA839D4FE32C3286FD0C /* AppCoordinator.swift */; };
-		B1B945423FEA638A1F9A4F70 /* ManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20388F68CFDE6232D07B5DD /* ManagerView.swift */; };
-		B295732326D8E611B22C6EC2 /* PinWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53805439D23577E83FD10E /* PinWindowView.swift */; };
-		D5B9B535A078BEBE05D84FF5 /* ImageAssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C290C8387E3ED086C7C3414 /* ImageAssetStore.swift */; };
-		DC58CA76DAB31C3B6FF0B2B3 /* libSpacePinCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 321F46B2E11C0CD71045550D /* libSpacePinCore.a */; };
-		FC847A139C21F1ACD921F158 /* PinItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28792411E4717E3EB7E8608 /* PinItem.swift */; };
+		1A20DCB60E8FC646B4FE44F7 /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A00A4E70D7F0186C8C1FC69 /* TestSupport.swift */; };
+		1B9354633114FA2FCAC93C9F /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 225FB4CDE7458C8153E89CDA /* AppIcon.icns */; };
+		256A4CDD49C4B71D9FFF197C /* PinRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55EC69E7A87F361A21C25DC /* PinRecordTests.swift */; };
+		2EA436E1A24F461394690983 /* libSpacePinCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7167D0DFF0BFB9D4DCB2D38 /* libSpacePinCore.a */; };
+		4011818FF841E6E976EC9B71 /* ManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25150261082FB21C25763527 /* ManagerView.swift */; };
+		407B49B98DCB6094AC506673 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F7D77E5F86B2E946BF067C /* AppCoordinator.swift */; };
+		4A6143AADA027FE0E098B58E /* SpacePinPaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CD35F90C5ABF8EBABEB4B9 /* SpacePinPaths.swift */; };
+		59F03282CB28BF44C4BDAD9E /* NoteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858E564647FD5D8C338CB9B /* NoteTheme.swift */; };
+		5CD9A2ABA53A8E0128EC0DAE /* PinItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C88FDAEB3538DF3E1F24E48 /* PinItem.swift */; };
+		6959FEB2F7833765054E8BC1 /* PinWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEF70338197637AFF973388 /* PinWindowController.swift */; };
+		6D84F268616C47F54B79E034 /* libSpacePinCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7167D0DFF0BFB9D4DCB2D38 /* libSpacePinCore.a */; };
+		7280E9AFEC3288FD02368228 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9300ED067A13F012F74C92B8 /* Cocoa.framework */; };
+		86DFB3697CFC110E7A37ABD9 /* ManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C174F27B335733CF399B43A /* ManagerWindowController.swift */; };
+		87531323BFC2CDB55BF33C38 /* ImageAssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BBB16093CC8D88F1D4DA5 /* ImageAssetStore.swift */; };
+		876F00C79143EC89EDE08471 /* PinRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7415ADB5D94A7F5A41F9931 /* PinRepositoryTests.swift */; };
+		88580738D04AFA96C1275147 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = EDB82F222352D3122796D0B0 /* AppIcon.icon */; };
+		8E46F6168EA94678B88D14F8 /* PinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DF94D4D99FD1DA3A0471E4 /* PinRepository.swift */; };
+		A84CD717E92C25414468FFA9 /* PinRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E792CCB1C3A1ACB17AECE6D8 /* PinRecord.swift */; };
+		C219D767E79E9044D2C99FCC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F9ED571B060905F86495C6 /* Localization.swift */; };
+		C52C1696232E5A89D458F45A /* PinPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85B62202E35FC8F91328BCF /* PinPanel.swift */; };
+		C588DDF3FC626CDAF89AB844 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 590B18F94A95B764D7DA77D5 /* Assets.xcassets */; };
+		C5AE222D077CC9420607DD1D /* ImageAssetStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7997661C5A3E1FA6F89315 /* ImageAssetStoreTests.swift */; };
+		C650820046AE8E457EA312E6 /* SpacePinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF310F5989F8BD5D2ECF81C /* SpacePinApp.swift */; };
+		EC2A086BC50B1DA38FD4AA25 /* localizations.json in Resources */ = {isa = PBXBuildFile; fileRef = FF42E9419D1D10A03292603A /* localizations.json */; };
+		EFD049DEB8376359D46FC11A /* PinWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76B68160DEE46EAA9D25F48 /* PinWindowView.swift */; };
+		F702E5EBBC67F2E410DDDE13 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9300ED067A13F012F74C92B8 /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		77EFDD023D36B0E626443215 /* PBXContainerItemProxy */ = {
+		4BCCC7283830AAD3EB628557 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D4E29FE4A67EB4F6164B2DC5 /* Project object */;
+			containerPortal = 5C24A24F1CAAC3389B08DD26 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E2A48E411A3C690592D6B2A8;
+			remoteGlobalIDString = DF7ADB22D7A6FD799914EDF3;
 			remoteInfo = SpacePinCore;
 		};
-		8C66CD788E3D1F693EE07793 /* PBXContainerItemProxy */ = {
+		DCD83F337D1D667D2725845B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D4E29FE4A67EB4F6164B2DC5 /* Project object */;
+			containerPortal = 5C24A24F1CAAC3389B08DD26 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E2A48E411A3C690592D6B2A8;
+			remoteGlobalIDString = DF7ADB22D7A6FD799914EDF3;
 			remoteInfo = SpacePinCore;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		073A319F70815F369809A378 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		14A5F34DB55C3AFB3DD87E1D /* PinRecordTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRecordTests.swift; sourceTree = "<group>"; };
-		28F5CB71496A10651388ADDA /* SpacePinPaths.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpacePinPaths.swift; sourceTree = "<group>"; };
-		2A5D4BA77FFB94871442FE3E /* SpacePinCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpacePinCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BDA997BFA3DF4365205E20B /* SpacePin.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = SpacePin.entitlements; sourceTree = "<group>"; };
-		2F53805439D23577E83FD10E /* PinWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinWindowView.swift; sourceTree = "<group>"; };
-		321F46B2E11C0CD71045550D /* libSpacePinCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSpacePinCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		369527DFA77500C8C1186EE4 /* ImageAssetStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageAssetStoreTests.swift; sourceTree = "<group>"; };
-		5C290C8387E3ED086C7C3414 /* ImageAssetStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageAssetStore.swift; sourceTree = "<group>"; };
-		61D06B5DE0E84D03C6A3EBEE /* AppIcon.icns */ = {isa = PBXFileReference; includeInIndex = 1; path = AppIcon.icns; sourceTree = "<group>"; };
-		75CAD22807CF8AAA0A2F2D4F /* NoteTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteTheme.swift; sourceTree = "<group>"; };
-		7BE2F1AEE7EA64ED067AD0EF /* PinRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRepository.swift; sourceTree = "<group>"; };
-		8337BD0E1AC303851A466C8C /* PinRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRepositoryTests.swift; sourceTree = "<group>"; };
-		9F6BDAC6C85D3B14E25190ED /* ManagerWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagerWindowController.swift; sourceTree = "<group>"; };
-		AC55513C55896DBC1705CF22 /* PinRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRecord.swift; sourceTree = "<group>"; };
-		B2B1EA839D4FE32C3286FD0C /* AppCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		B625C7A55585E894EC90601C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		B77B8B3D422F68E556782C31 /* PinWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinWindowController.swift; sourceTree = "<group>"; };
-		DAC2E7DBE13FC46FE2748144 /* SpacePin-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SpacePin-Info.plist"; sourceTree = "<group>"; };
-		DE68A619AEEDEE600AEC2D96 /* SpacePin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpacePin.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E14CD493A38BC23C0E6DF212 /* AppIcon.icon */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = AppIcon.icon; sourceTree = "<group>"; };
-		E20388F68CFDE6232D07B5DD /* ManagerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagerView.swift; sourceTree = "<group>"; };
-		F28792411E4717E3EB7E8608 /* PinItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinItem.swift; sourceTree = "<group>"; };
-		F742A293F31A09A06EEC7E89 /* PinPanel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinPanel.swift; sourceTree = "<group>"; };
-		F89D130D02ABE8A6669023C9 /* TestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
-		FFE9A5C9B29307C658CE7188 /* SpacePinApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpacePinApp.swift; sourceTree = "<group>"; };
+		07DF94D4D99FD1DA3A0471E4 /* PinRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRepository.swift; sourceTree = "<group>"; };
+		1BAD53A2083D9827058E2FB7 /* SpacePin-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SpacePin-Info.plist"; sourceTree = "<group>"; };
+		225FB4CDE7458C8153E89CDA /* AppIcon.icns */ = {isa = PBXFileReference; includeInIndex = 1; path = AppIcon.icns; sourceTree = "<group>"; };
+		25150261082FB21C25763527 /* ManagerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagerView.swift; sourceTree = "<group>"; };
+		39F9ED571B060905F86495C6 /* Localization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		4A00A4E70D7F0186C8C1FC69 /* TestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
+		54CD35F90C5ABF8EBABEB4B9 /* SpacePinPaths.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpacePinPaths.swift; sourceTree = "<group>"; };
+		5858E564647FD5D8C338CB9B /* NoteTheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NoteTheme.swift; sourceTree = "<group>"; };
+		590B18F94A95B764D7DA77D5 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5CEF70338197637AFF973388 /* PinWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinWindowController.swift; sourceTree = "<group>"; };
+		6024CC779EB42E6E3A0CEAE0 /* SpacePinCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpacePinCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6476D8522540FE206048E748 /* SpacePin.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = SpacePin.entitlements; sourceTree = "<group>"; };
+		6C88FDAEB3538DF3E1F24E48 /* PinItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinItem.swift; sourceTree = "<group>"; };
+		720032D508D02DB9D3149B6D /* SpacePin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpacePin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C174F27B335733CF399B43A /* ManagerWindowController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManagerWindowController.swift; sourceTree = "<group>"; };
+		9300ED067A13F012F74C92B8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		A28BBB16093CC8D88F1D4DA5 /* ImageAssetStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageAssetStore.swift; sourceTree = "<group>"; };
+		AEF310F5989F8BD5D2ECF81C /* SpacePinApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpacePinApp.swift; sourceTree = "<group>"; };
+		C7167D0DFF0BFB9D4DCB2D38 /* libSpacePinCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSpacePinCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7415ADB5D94A7F5A41F9931 /* PinRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRepositoryTests.swift; sourceTree = "<group>"; };
+		E55EC69E7A87F361A21C25DC /* PinRecordTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRecordTests.swift; sourceTree = "<group>"; };
+		E792CCB1C3A1ACB17AECE6D8 /* PinRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRecord.swift; sourceTree = "<group>"; };
+		E85B62202E35FC8F91328BCF /* PinPanel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinPanel.swift; sourceTree = "<group>"; };
+		EDB82F222352D3122796D0B0 /* AppIcon.icon */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = AppIcon.icon; sourceTree = "<group>"; };
+		F76B68160DEE46EAA9D25F48 /* PinWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinWindowView.swift; sourceTree = "<group>"; };
+		F9F7D77E5F86B2E946BF067C /* AppCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		FF42E9419D1D10A03292603A /* localizations.json */ = {isa = PBXFileReference; includeInIndex = 1; path = localizations.json; sourceTree = "<group>"; };
+		FF7997661C5A3E1FA6F89315 /* ImageAssetStoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageAssetStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		42693532654E3DE656288532 /* Frameworks */ = {
+		85FDB5B101C061506C1EE057 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45F5335F727368E4AAEB4DAA /* Cocoa.framework in Frameworks */,
-				6C76C1A060F2479871DAC061 /* libSpacePinCore.a in Frameworks */,
+				F702E5EBBC67F2E410DDDE13 /* Cocoa.framework in Frameworks */,
+				2EA436E1A24F461394690983 /* libSpacePinCore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8D204D1C9F80EAFD92590FDC /* Frameworks */ = {
+		C0B0A66DBFBD15282E14BBAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BA8EFDDFE05C8C91628E55C /* Cocoa.framework in Frameworks */,
-				DC58CA76DAB31C3B6FF0B2B3 /* libSpacePinCore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99910F88BE3482B2C5195A82 /* Frameworks */ = {
+		D978CA1ED62C42187E818857 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7280E9AFEC3288FD02368228 /* Cocoa.framework in Frameworks */,
+				6D84F268616C47F54B79E034 /* libSpacePinCore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		086930A0254B255ACC230EB2 /* Frameworks */ = {
+		14A2CABA6E70C81526F38156 /* SpacePinCore */ = {
 			isa = PBXGroup;
 			children = (
-				C03F689413B06E398246E725 /* OS X */,
+				A28BBB16093CC8D88F1D4DA5 /* ImageAssetStore.swift */,
+				E792CCB1C3A1ACB17AECE6D8 /* PinRecord.swift */,
+				07DF94D4D99FD1DA3A0471E4 /* PinRepository.swift */,
+				54CD35F90C5ABF8EBABEB4B9 /* SpacePinPaths.swift */,
 			);
-			name = Frameworks;
+			name = SpacePinCore;
+			path = SpacePinCore;
 			sourceTree = "<group>";
 		};
-		318F58442759AFBD0483BC95 /* SpacePinCoreTests */ = {
+		45995F06D01B108CB0520755 /* SpacePin */ = {
 			isa = PBXGroup;
 			children = (
-				369527DFA77500C8C1186EE4 /* ImageAssetStoreTests.swift */,
-				14A5F34DB55C3AFB3DD87E1D /* PinRecordTests.swift */,
-				8337BD0E1AC303851A466C8C /* PinRepositoryTests.swift */,
-				F89D130D02ABE8A6669023C9 /* TestSupport.swift */,
+				E20E6F3232A7877FA1DC778A /* Resources */,
+				F9F7D77E5F86B2E946BF067C /* AppCoordinator.swift */,
+				39F9ED571B060905F86495C6 /* Localization.swift */,
+				25150261082FB21C25763527 /* ManagerView.swift */,
+				7C174F27B335733CF399B43A /* ManagerWindowController.swift */,
+				5858E564647FD5D8C338CB9B /* NoteTheme.swift */,
+				6C88FDAEB3538DF3E1F24E48 /* PinItem.swift */,
+				E85B62202E35FC8F91328BCF /* PinPanel.swift */,
+				5CEF70338197637AFF973388 /* PinWindowController.swift */,
+				F76B68160DEE46EAA9D25F48 /* PinWindowView.swift */,
+				AEF310F5989F8BD5D2ECF81C /* SpacePinApp.swift */,
 			);
-			name = SpacePinCoreTests;
-			path = SpacePinCoreTests;
+			name = SpacePin;
+			path = SpacePin;
 			sourceTree = "<group>";
 		};
-		7E5A4339BBD36B12A728493D /* Assets.xcassets */ = {
+		55DABE689A0054B03F9301C4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				720032D508D02DB9D3149B6D /* SpacePin.app */,
+				C7167D0DFF0BFB9D4DCB2D38 /* libSpacePinCore.a */,
+				6024CC779EB42E6E3A0CEAE0 /* SpacePinCoreTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		87CF66272EC8411403943E06 /* Assets.xcassets */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -136,101 +161,91 @@
 			path = Assets.xcassets;
 			sourceTree = "<group>";
 		};
-		A6E0D5047B9FC5BD490C1003 /* SpacePin */ = {
+		AB681C2B8B63BDDD6B7B602A /* OS X */ = {
 			isa = PBXGroup;
 			children = (
-				B2B1EA839D4FE32C3286FD0C /* AppCoordinator.swift */,
-				E20388F68CFDE6232D07B5DD /* ManagerView.swift */,
-				9F6BDAC6C85D3B14E25190ED /* ManagerWindowController.swift */,
-				75CAD22807CF8AAA0A2F2D4F /* NoteTheme.swift */,
-				F28792411E4717E3EB7E8608 /* PinItem.swift */,
-				F742A293F31A09A06EEC7E89 /* PinPanel.swift */,
-				B77B8B3D422F68E556782C31 /* PinWindowController.swift */,
-				2F53805439D23577E83FD10E /* PinWindowView.swift */,
-				FFE9A5C9B29307C658CE7188 /* SpacePinApp.swift */,
-			);
-			name = SpacePin;
-			path = SpacePin;
-			sourceTree = "<group>";
-		};
-		BA5D133B9F29B94522B3A0BD /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				7E5A4339BBD36B12A728493D /* Assets.xcassets */,
-				DAC2E7DBE13FC46FE2748144 /* SpacePin-Info.plist */,
-				2BDA997BFA3DF4365205E20B /* SpacePin.entitlements */,
-				073A319F70815F369809A378 /* Assets.xcassets */,
-				E14CD493A38BC23C0E6DF212 /* AppIcon.icon */,
-				61D06B5DE0E84D03C6A3EBEE /* AppIcon.icns */,
-			);
-			name = Support;
-			path = Support;
-			sourceTree = "<group>";
-		};
-		C03F689413B06E398246E725 /* OS X */ = {
-			isa = PBXGroup;
-			children = (
-				B625C7A55585E894EC90601C /* Cocoa.framework */,
+				9300ED067A13F012F74C92B8 /* Cocoa.framework */,
 			);
 			name = "OS X";
 			sourceTree = "<group>";
 		};
-		C084A1C956DAF981B0933410 /* SpacePinCore */ = {
+		C2F5053415ABE12BE4EB6150 /* SpacePinCoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				5C290C8387E3ED086C7C3414 /* ImageAssetStore.swift */,
-				AC55513C55896DBC1705CF22 /* PinRecord.swift */,
-				7BE2F1AEE7EA64ED067AD0EF /* PinRepository.swift */,
-				28F5CB71496A10651388ADDA /* SpacePinPaths.swift */,
+				FF7997661C5A3E1FA6F89315 /* ImageAssetStoreTests.swift */,
+				E55EC69E7A87F361A21C25DC /* PinRecordTests.swift */,
+				D7415ADB5D94A7F5A41F9931 /* PinRepositoryTests.swift */,
+				4A00A4E70D7F0186C8C1FC69 /* TestSupport.swift */,
 			);
-			name = SpacePinCore;
-			path = SpacePinCore;
+			name = SpacePinCoreTests;
+			path = SpacePinCoreTests;
 			sourceTree = "<group>";
 		};
-		C74B6091B24CDE3C291809DC /* Sources */ = {
+		D23018B8DB47D0F2AC8F20EA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A6E0D5047B9FC5BD490C1003 /* SpacePin */,
-				C084A1C956DAF981B0933410 /* SpacePinCore */,
+				45995F06D01B108CB0520755 /* SpacePin */,
+				14A2CABA6E70C81526F38156 /* SpacePinCore */,
 			);
 			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		D4C835F85380316FE190DC2C /* Products */ = {
+		D5963DB6EB1A660087295FE6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				DE68A619AEEDEE600AEC2D96 /* SpacePin.app */,
-				321F46B2E11C0CD71045550D /* libSpacePinCore.a */,
-				2A5D4BA77FFB94871442FE3E /* SpacePinCoreTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E87B8EBC60B85316EACC6085 = {
-			isa = PBXGroup;
-			children = (
-				D4C835F85380316FE190DC2C /* Products */,
-				086930A0254B255ACC230EB2 /* Frameworks */,
-				C74B6091B24CDE3C291809DC /* Sources */,
-				F9226191A964D2EB5F6AD810 /* Tests */,
-				BA5D133B9F29B94522B3A0BD /* Support */,
-			);
-			sourceTree = "<group>";
-		};
-		F9226191A964D2EB5F6AD810 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				318F58442759AFBD0483BC95 /* SpacePinCoreTests */,
+				C2F5053415ABE12BE4EB6150 /* SpacePinCoreTests */,
 			);
 			name = Tests;
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		E20E6F3232A7877FA1DC778A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FF42E9419D1D10A03292603A /* localizations.json */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EBB837F8A67181CCE07CC8F1 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				87CF66272EC8411403943E06 /* Assets.xcassets */,
+				1BAD53A2083D9827058E2FB7 /* SpacePin-Info.plist */,
+				6476D8522540FE206048E748 /* SpacePin.entitlements */,
+				590B18F94A95B764D7DA77D5 /* Assets.xcassets */,
+				EDB82F222352D3122796D0B0 /* AppIcon.icon */,
+				225FB4CDE7458C8153E89CDA /* AppIcon.icns */,
+			);
+			name = Support;
+			path = Support;
+			sourceTree = "<group>";
+		};
+		EF0D8FEE70082227302621A6 = {
+			isa = PBXGroup;
+			children = (
+				55DABE689A0054B03F9301C4 /* Products */,
+				F99F08E1BCAA5EC1E698C23E /* Frameworks */,
+				D23018B8DB47D0F2AC8F20EA /* Sources */,
+				D5963DB6EB1A660087295FE6 /* Tests */,
+				EBB837F8A67181CCE07CC8F1 /* Support */,
+			);
+			sourceTree = "<group>";
+		};
+		F99F08E1BCAA5EC1E698C23E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB681C2B8B63BDDD6B7B602A /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		B9F1803900AA3650B7139501 /* Headers */ = {
+		405DF48753591047D5D7CFE9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -240,49 +255,31 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		41DAFC7B1EDE457804C786A4 /* SpacePin */ = {
+		4694E5B62B5F9418084888A6 /* SpacePinCoreTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 296D6E95E0C60E8463FCED30 /* Build configuration list for PBXNativeTarget "SpacePin" */;
+			buildConfigurationList = 878F8207CCB91A130E6EDC32 /* Build configuration list for PBXNativeTarget "SpacePinCoreTests" */;
 			buildPhases = (
-				DE7EE5C01F9BAD1097A9FF7F /* Sources */,
-				42693532654E3DE656288532 /* Frameworks */,
-				8AFC3A9290B31612CAA1D484 /* Resources */,
+				50FE44106C7262635ACC1038 /* Sources */,
+				D978CA1ED62C42187E818857 /* Frameworks */,
+				090975C6CF5D6F9FA71DA8D4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				99165F12AA6AB6CFE5FC7B3E /* PBXTargetDependency */,
-			);
-			name = SpacePin;
-			productName = SpacePin;
-			productReference = DE68A619AEEDEE600AEC2D96 /* SpacePin.app */;
-			productType = "com.apple.product-type.application";
-		};
-		8E5625EE8E8215896B3AD7E4 /* SpacePinCoreTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BDB7DBC01E5B3D3033967CE6 /* Build configuration list for PBXNativeTarget "SpacePinCoreTests" */;
-			buildPhases = (
-				398DBDA07013EC20B3CA11D9 /* Sources */,
-				8D204D1C9F80EAFD92590FDC /* Frameworks */,
-				FCF430AD4612BBDA11E7E356 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C7BBD235440B022ABD406AF0 /* PBXTargetDependency */,
+				DF4A053476435DA851788EA7 /* PBXTargetDependency */,
 			);
 			name = SpacePinCoreTests;
 			productName = SpacePinCoreTests;
-			productReference = 2A5D4BA77FFB94871442FE3E /* SpacePinCoreTests.xctest */;
+			productReference = 6024CC779EB42E6E3A0CEAE0 /* SpacePinCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E2A48E411A3C690592D6B2A8 /* SpacePinCore */ = {
+		DF7ADB22D7A6FD799914EDF3 /* SpacePinCore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7D27283B4B46CB22C56C7685 /* Build configuration list for PBXNativeTarget "SpacePinCore" */;
+			buildConfigurationList = 449B40850544D4915D16F6F7 /* Build configuration list for PBXNativeTarget "SpacePinCore" */;
 			buildPhases = (
-				B9F1803900AA3650B7139501 /* Headers */,
-				E1F0289AFB8B99ADB54DFE1B /* Sources */,
-				99910F88BE3482B2C5195A82 /* Frameworks */,
+				405DF48753591047D5D7CFE9 /* Headers */,
+				1672FDBC02BD019164BCDFE9 /* Sources */,
+				C0B0A66DBFBD15282E14BBAC /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -290,19 +287,37 @@
 			);
 			name = SpacePinCore;
 			productName = SpacePinCore;
-			productReference = 321F46B2E11C0CD71045550D /* libSpacePinCore.a */;
+			productReference = C7167D0DFF0BFB9D4DCB2D38 /* libSpacePinCore.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		FD269A87A362AA8EED097713 /* SpacePin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6A4C65B55727ED0FDFC7528 /* Build configuration list for PBXNativeTarget "SpacePin" */;
+			buildPhases = (
+				BF5D635DA4E9372551271271 /* Sources */,
+				85FDB5B101C061506C1EE057 /* Frameworks */,
+				62236752F95CD5334608EE79 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				361C40E8E2DC70AEDB9C36D4 /* PBXTargetDependency */,
+			);
+			name = SpacePin;
+			productName = SpacePin;
+			productReference = 720032D508D02DB9D3149B6D /* SpacePin.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D4E29FE4A67EB4F6164B2DC5 /* Project object */ = {
+		5C24A24F1CAAC3389B08DD26 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1620;
 			};
-			buildConfigurationList = 946A900EDB12B4902D71F966 /* Build configuration list for PBXProject "SpacePin" */;
+			buildConfigurationList = 76F90C5C683FE2CB83D5C88F /* Build configuration list for PBXProject "SpacePin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -310,142 +325,126 @@
 				en,
 				Base,
 			);
-			mainGroup = E87B8EBC60B85316EACC6085;
+			mainGroup = EF0D8FEE70082227302621A6;
 			minimizedProjectReferenceProxies = 0;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D4C835F85380316FE190DC2C /* Products */;
+			productRefGroup = 55DABE689A0054B03F9301C4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				41DAFC7B1EDE457804C786A4 /* SpacePin */,
-				E2A48E411A3C690592D6B2A8 /* SpacePinCore */,
-				8E5625EE8E8215896B3AD7E4 /* SpacePinCoreTests */,
+				FD269A87A362AA8EED097713 /* SpacePin */,
+				DF7ADB22D7A6FD799914EDF3 /* SpacePinCore */,
+				4694E5B62B5F9418084888A6 /* SpacePinCoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8AFC3A9290B31612CAA1D484 /* Resources */ = {
+		090975C6CF5D6F9FA71DA8D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				274FDA8B3245D92016317DBC /* Assets.xcassets in Resources */,
-				92AFC79C4989631144C948F5 /* AppIcon.icon in Resources */,
-				0411624946714FEA9D77E3D1 /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FCF430AD4612BBDA11E7E356 /* Resources */ = {
+		62236752F95CD5334608EE79 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C588DDF3FC626CDAF89AB844 /* Assets.xcassets in Resources */,
+				88580738D04AFA96C1275147 /* AppIcon.icon in Resources */,
+				1B9354633114FA2FCAC93C9F /* AppIcon.icns in Resources */,
+				EC2A086BC50B1DA38FD4AA25 /* localizations.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		398DBDA07013EC20B3CA11D9 /* Sources */ = {
+		1672FDBC02BD019164BCDFE9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4F02D564E48B2E4C175716 /* ImageAssetStoreTests.swift in Sources */,
-				8A75339608E840B47DED6DC1 /* PinRecordTests.swift in Sources */,
-				2609BF9658F3FC59028B5B0F /* PinRepositoryTests.swift in Sources */,
-				14BB8D55F3E44923EB6F4FA7 /* TestSupport.swift in Sources */,
+				87531323BFC2CDB55BF33C38 /* ImageAssetStore.swift in Sources */,
+				A84CD717E92C25414468FFA9 /* PinRecord.swift in Sources */,
+				8E46F6168EA94678B88D14F8 /* PinRepository.swift in Sources */,
+				4A6143AADA027FE0E098B58E /* SpacePinPaths.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DE7EE5C01F9BAD1097A9FF7F /* Sources */ = {
+		50FE44106C7262635ACC1038 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A84D9D4C7B836FDA77E30AC5 /* AppCoordinator.swift in Sources */,
-				B1B945423FEA638A1F9A4F70 /* ManagerView.swift in Sources */,
-				81B2D304A0E7DBC5BD1D05B9 /* ManagerWindowController.swift in Sources */,
-				5801FBDDC293F84C604A910A /* NoteTheme.swift in Sources */,
-				FC847A139C21F1ACD921F158 /* PinItem.swift in Sources */,
-				5F8B56EAEF71B78B20D1B075 /* PinPanel.swift in Sources */,
-				6A92536368A146AB31E2A04D /* PinWindowController.swift in Sources */,
-				B295732326D8E611B22C6EC2 /* PinWindowView.swift in Sources */,
-				76D22E45EB852F4CF68D6745 /* SpacePinApp.swift in Sources */,
+				C5AE222D077CC9420607DD1D /* ImageAssetStoreTests.swift in Sources */,
+				256A4CDD49C4B71D9FFF197C /* PinRecordTests.swift in Sources */,
+				876F00C79143EC89EDE08471 /* PinRepositoryTests.swift in Sources */,
+				1A20DCB60E8FC646B4FE44F7 /* TestSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1F0289AFB8B99ADB54DFE1B /* Sources */ = {
+		BF5D635DA4E9372551271271 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5B9B535A078BEBE05D84FF5 /* ImageAssetStore.swift in Sources */,
-				1F0863B62FE9A7C049225981 /* PinRecord.swift in Sources */,
-				A6AA4BE774C6EBEDDC65186D /* PinRepository.swift in Sources */,
-				93ED7EC2FA885EB33CA1FF78 /* SpacePinPaths.swift in Sources */,
+				407B49B98DCB6094AC506673 /* AppCoordinator.swift in Sources */,
+				C219D767E79E9044D2C99FCC /* Localization.swift in Sources */,
+				4011818FF841E6E976EC9B71 /* ManagerView.swift in Sources */,
+				86DFB3697CFC110E7A37ABD9 /* ManagerWindowController.swift in Sources */,
+				59F03282CB28BF44C4BDAD9E /* NoteTheme.swift in Sources */,
+				5CD9A2ABA53A8E0128EC0DAE /* PinItem.swift in Sources */,
+				C52C1696232E5A89D458F45A /* PinPanel.swift in Sources */,
+				6959FEB2F7833765054E8BC1 /* PinWindowController.swift in Sources */,
+				EFD049DEB8376359D46FC11A /* PinWindowView.swift in Sources */,
+				C650820046AE8E457EA312E6 /* SpacePinApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		99165F12AA6AB6CFE5FC7B3E /* PBXTargetDependency */ = {
+		361C40E8E2DC70AEDB9C36D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SpacePinCore;
-			target = E2A48E411A3C690592D6B2A8 /* SpacePinCore */;
-			targetProxy = 8C66CD788E3D1F693EE07793 /* PBXContainerItemProxy */;
+			target = DF7ADB22D7A6FD799914EDF3 /* SpacePinCore */;
+			targetProxy = DCD83F337D1D667D2725845B /* PBXContainerItemProxy */;
 		};
-		C7BBD235440B022ABD406AF0 /* PBXTargetDependency */ = {
+		DF4A053476435DA851788EA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SpacePinCore;
-			target = E2A48E411A3C690592D6B2A8 /* SpacePinCore */;
-			targetProxy = 77EFDD023D36B0E626443215 /* PBXContainerItemProxy */;
+			target = DF7ADB22D7A6FD799914EDF3 /* SpacePinCore */;
+			targetProxy = 4BCCC7283830AAD3EB628557 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		481E8DFDADF69032126349CD /* Debug */ = {
+		6EC1526937A0D5EEA3BB8219 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_ENTITLEMENTS = Support/SpacePin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = TQW4K2Z6UW;
-				ENABLE_HARDENED_RUNTIME = YES;
-				EXECUTABLE_PREFIX = lib;
-				MACH_O_TYPE = staticlib;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin.core;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		A23141945145BFD1E5F48629 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TQW4K2Z6UW;
 				ENABLE_HARDENED_RUNTIME = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Support/SpacePin-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 6.0;
-				TEST_HOST = "";
 			};
 			name = Release;
 		};
-		A23A79797C6A66B1DDD302A8 /* Debug */ = {
+		6FF56AEFD08CB7F52E61404B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -508,33 +507,29 @@
 			};
 			name = Debug;
 		};
-		B57057D70B24117A6CF2539F /* Debug */ = {
+		9B77E1996BA2EFFACE17AA26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGN_ENTITLEMENTS = Support/SpacePin.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = TQW4K2Z6UW;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Support/SpacePin-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				EXECUTABLE_PREFIX = lib;
+				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin.core;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
-		B767B242FCD37ACC6509A346 /* Debug */ = {
+		B522FCF290DA6FEFED992B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "";
@@ -556,7 +551,7 @@
 			};
 			name = Debug;
 		};
-		B9B8B5C2C362E5C5C83ADE5F /* Release */ = {
+		C0265ADCDDEF081C5C1965F5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -578,33 +573,29 @@
 			};
 			name = Release;
 		};
-		C992F1D295B3912115699AF6 /* Release */ = {
+		CC43B08600AF3BF9D2C1F034 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGN_ENTITLEMENTS = Support/SpacePin.entitlements;
+				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TQW4K2Z6UW;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "Support/SpacePin-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 6.0;
+				TEST_HOST = "";
 			};
 			name = Release;
 		};
-		F5328DE8C7858796F7F2A775 /* Release */ = {
+		DD2DE4CE51575EC66B080D83 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -660,46 +651,72 @@
 			};
 			name = Release;
 		};
+		EACC73824B27C01C3F8812A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_ENTITLEMENTS = Support/SpacePin.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TQW4K2Z6UW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "Support/SpacePin-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zoochigames.spacepin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		296D6E95E0C60E8463FCED30 /* Build configuration list for PBXNativeTarget "SpacePin" */ = {
+		449B40850544D4915D16F6F7 /* Build configuration list for PBXNativeTarget "SpacePinCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C992F1D295B3912115699AF6 /* Release */,
-				B57057D70B24117A6CF2539F /* Debug */,
+				C0265ADCDDEF081C5C1965F5 /* Release */,
+				9B77E1996BA2EFFACE17AA26 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7D27283B4B46CB22C56C7685 /* Build configuration list for PBXNativeTarget "SpacePinCore" */ = {
+		76F90C5C683FE2CB83D5C88F /* Build configuration list for PBXProject "SpacePin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B9B8B5C2C362E5C5C83ADE5F /* Release */,
-				481E8DFDADF69032126349CD /* Debug */,
+				6FF56AEFD08CB7F52E61404B /* Debug */,
+				DD2DE4CE51575EC66B080D83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		946A900EDB12B4902D71F966 /* Build configuration list for PBXProject "SpacePin" */ = {
+		878F8207CCB91A130E6EDC32 /* Build configuration list for PBXNativeTarget "SpacePinCoreTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A23A79797C6A66B1DDD302A8 /* Debug */,
-				F5328DE8C7858796F7F2A775 /* Release */,
+				CC43B08600AF3BF9D2C1F034 /* Release */,
+				B522FCF290DA6FEFED992B17 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BDB7DBC01E5B3D3033967CE6 /* Build configuration list for PBXNativeTarget "SpacePinCoreTests" */ = {
+		A6A4C65B55727ED0FDFC7528 /* Build configuration list for PBXNativeTarget "SpacePin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A23141945145BFD1E5F48629 /* Release */,
-				B767B242FCD37ACC6509A346 /* Debug */,
+				6EC1526937A0D5EEA3BB8219 /* Release */,
+				EACC73824B27C01C3F8812A9 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D4E29FE4A67EB4F6164B2DC5 /* Project object */;
+	rootObject = 5C24A24F1CAAC3389B08DD26 /* Project object */;
 }

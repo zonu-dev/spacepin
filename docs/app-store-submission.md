@@ -102,4 +102,5 @@ Use a short note similar to this:
 ## Remaining Non-Code Inputs
 
 - Public Privacy Policy URL on `zoochigames.com`
-- Localized descriptions (optional, can be added after initial release)
+- Final screenshots for each storefront language you decide to upload
+- App Store Connect copy from `docs/app-store-metadata-localizations.json`

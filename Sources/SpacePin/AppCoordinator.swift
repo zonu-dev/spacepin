@@ -46,7 +46,7 @@ final class AppCoordinator: ObservableObject {
         NSApp.activate(ignoringOtherApps: true)
 
         let noteFrame = defaultFrame(for: CGSize(width: 320, height: 240))
-        let record = PinRecord.makeNote(frame: noteFrame, noteText: "")
+        let record = PinRecord.makeNote(frame: noteFrame, title: "", noteText: "")
         addPin(record, bringToFront: true)
     }
 
@@ -55,7 +55,7 @@ final class AppCoordinator: ObservableObject {
         NSApp.activate(ignoringOtherApps: true)
 
         let panel = NSOpenPanel()
-        panel.title = "Choose Images"
+        panel.title = L10n.text("error.choose_images", fallback: "Choose Images")
         panel.allowedContentTypes = [.image]
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
@@ -94,7 +94,10 @@ final class AppCoordinator: ObservableObject {
 
                 guard let fileURL = Self.extractFileURL(from: item) else {
                     Task { @MainActor in
-                        self.lastErrorMessage = "Dropped item could not be resolved as a file URL."
+                        self.lastErrorMessage = L10n.text(
+                            "error.dropped_item_not_file_url",
+                            fallback: "Dropped item could not be resolved as a file URL."
+                        )
                     }
                     return
                 }
@@ -159,7 +162,11 @@ final class AppCoordinator: ObservableObject {
                 addPin(record, bringToFront: false, shouldSchedulePersistence: false)
             }
         } catch {
-            lastErrorMessage = "Failed to restore pins: \(error.localizedDescription)"
+            lastErrorMessage = L10n.format(
+                "error.failed_restore_pins",
+                fallback: "Failed to restore pins: %@",
+                error.localizedDescription
+            )
         }
     }
 
@@ -237,7 +244,11 @@ final class AppCoordinator: ObservableObject {
             try repository.save(pins.map(\.record))
             try imageStore.removeUnreferencedAssets(keeping: referencedImageFilenames())
         } catch {
-            lastErrorMessage = "Failed to save pins: \(error.localizedDescription)"
+            lastErrorMessage = L10n.format(
+                "error.failed_save_pins",
+                fallback: "Failed to save pins: %@",
+                error.localizedDescription
+            )
         }
     }
 
@@ -364,7 +375,11 @@ private enum SpacePinError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case let .unsupportedImage(filename):
-            return "\(filename) could not be loaded as an image."
+            return L10n.format(
+                "error.unsupported_image",
+                fallback: "%@ could not be loaded as an image.",
+                filename
+            )
         }
     }
 }

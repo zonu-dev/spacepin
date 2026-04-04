@@ -15,7 +15,7 @@ final class PinItem: ObservableObject, Identifiable {
     }
 
     var displayTitle: String {
-        record.displayTitle
+        record.localizedDisplayTitle
     }
 
     var notePreview: String {
@@ -23,7 +23,7 @@ final class PinItem: ObservableObject, Identifiable {
             .replacingOccurrences(of: "\n", with: " ")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        return flattened.isEmpty ? "Empty note" : flattened
+        return flattened.isEmpty ? L10n.text("label.empty_note", fallback: "Empty note") : flattened
     }
 
     func updateFrameFromWindow(_ frame: CGRect) {
@@ -72,9 +72,9 @@ final class PinItem: ObservableObject, Identifiable {
 
     func setTitle(_ title: String) {
         let resolvedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        let nextTitle = resolvedTitle.isEmpty ? record.defaultTitle : resolvedTitle
+        let nextTitle = resolvedTitle
 
-        guard record.displayTitle != nextTitle else {
+        guard record.title != nextTitle else {
             return
         }
 

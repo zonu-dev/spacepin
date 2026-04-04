@@ -14,7 +14,7 @@ struct SpacePinApp: App {
     }
 
     var body: some Scene {
-        MenuBarExtra("SpacePin", systemImage: "pin.circle.fill") {
+        MenuBarExtra(L10n.text("app.name", fallback: "SpacePin"), systemImage: "pin.circle.fill") {
             MenuBarContentView()
                 .environmentObject(coordinator)
         }
@@ -37,23 +37,23 @@ private struct MenuBarContentView: View {
     @EnvironmentObject private var coordinator: AppCoordinator
 
     var body: some View {
-        Button("Open Manager") {
+        Button(L10n.text("action.open_manager", fallback: "Open Manager")) {
             coordinator.showManagerWindow()
         }
         .keyboardShortcut("0", modifiers: [.command, .option])
 
-        Button("New Note Pin") {
+        Button(L10n.text("action.new_note_pin", fallback: "New Note Pin")) {
             coordinator.createNotePin()
         }
         .keyboardShortcut("n", modifiers: [.command, .option])
 
-        Button("Import Image…") {
+        Button(L10n.text("action.import_image", fallback: "Import Image…")) {
             coordinator.presentImageImporter()
         }
         .keyboardShortcut("i", modifiers: [.command, .option])
 
         if !coordinator.pins.isEmpty {
-            Button("Bring All Pins Forward") {
+            Button(L10n.text("action.bring_all_pins_forward", fallback: "Bring All Pins Forward")) {
                 coordinator.bringAllPinsToFront()
             }
 
@@ -65,7 +65,7 @@ private struct MenuBarContentView: View {
         } else {
             Divider()
 
-            Text("No active pins")
+            Text(L10n.text("label.no_active_pins", fallback: "No active pins"))
                 .foregroundStyle(.secondary)
         }
 
@@ -77,7 +77,7 @@ private struct MenuBarContentView: View {
 
         Divider()
 
-        Button("Quit SpacePin") {
+        Button(L10n.format("action.quit_app", fallback: "Quit %@", L10n.text("app.name", fallback: "SpacePin"))) {
             NSApplication.shared.terminate(nil)
         }
     }
@@ -89,38 +89,42 @@ private struct PinMenuSection: View {
 
     var body: some View {
         Menu(item.displayTitle) {
-            Button("Show") {
+            Button(L10n.text("action.show", fallback: "Show")) {
                 coordinator.bringToFront(id: item.id)
             }
 
-            Button("Duplicate") {
+            Button(L10n.text("action.duplicate", fallback: "Duplicate")) {
                 coordinator.duplicatePin(id: item.id)
             }
 
-            Button(item.record.locked ? "Unlock" : "Lock") {
+            Button(item.record.locked
+                ? L10n.text("action.unlock", fallback: "Unlock")
+                : L10n.text("action.lock", fallback: "Lock")) {
                 item.setLocked(!item.record.locked)
             }
 
-            Button(item.record.clickThrough ? "Disable Click-through" : "Enable Click-through") {
+            Button(item.record.clickThrough
+                ? L10n.text("action.disable_click_through", fallback: "Disable Click-through")
+                : L10n.text("action.enable_click_through", fallback: "Enable Click-through")) {
                 item.setClickThrough(!item.record.clickThrough)
             }
 
             if item.record.kind == .note {
-                Menu("Color") {
+                Menu(L10n.text("label.color", fallback: "Color")) {
                     ForEach(NoteColorPreset.allCases, id: \.self) { preset in
                         Button {
                             item.setNoteColorPreset(preset)
                         } label: {
                             HStack {
                                 Image(systemName: item.record.noteColorPreset == preset ? "checkmark.circle.fill" : "circle.fill")
-                                Text(preset.displayName)
+                                Text(L10n.noteColorName(preset))
                             }
                         }
                     }
                 }
             }
 
-            Button("Delete", role: .destructive) {
+            Button(L10n.text("action.delete", fallback: "Delete"), role: .destructive) {
                 coordinator.deletePin(id: item.id)
             }
         }
@@ -133,13 +137,13 @@ private struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("SpacePin")
+            Text(L10n.text("app.name", fallback: "SpacePin"))
                 .font(.title2.bold())
 
-            Text("Pins are stored in ~/Library/Application Support/SpacePin.")
+            Text(L10n.text("settings.storage_path", fallback: "Pins are stored in ~/Library/Application Support/SpacePin."))
                 .foregroundStyle(.secondary)
 
-            Button("Open Manager") {
+            Button(L10n.text("action.open_manager", fallback: "Open Manager")) {
                 coordinator.showManagerWindow()
             }
         }

@@ -119,7 +119,7 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
     public static func makeNote(
         id: UUID = UUID(),
         frame: CGRect,
-        title: String = PinRecord.defaultNoteTitle,
+        title: String = "",
         noteText: String = "",
         noteFontSize: Double = PinRecord.defaultNoteFontSize,
         noteColorPreset: NoteColorPreset = .sunflower
@@ -154,7 +154,7 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         sourceDisplayName: String? = nil
     ) -> PinRecord {
         let timestamp = Date.spacePinNow
-        let resolvedTitle = normalizedTitle(title, fallback: sourceDisplayName ?? "Image Pin")
+        let resolvedTitle = normalizedRawTitle(title)
 
         return PinRecord(
             id: id,
@@ -268,7 +268,7 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try container.encode(kind, forKey: .kind)
-        try container.encode(displayTitle, forKey: .title)
+        try container.encode(title, forKey: .title)
         try container.encode(frame, forKey: .frame)
         try container.encode(opacity, forKey: .opacity)
         try container.encode(clickThrough, forKey: .clickThrough)
@@ -287,6 +287,10 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
     private static func normalizedTitle(_ title: String?, fallback: String) -> String {
         let trimmedTitle = title?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         return trimmedTitle.isEmpty ? fallback : trimmedTitle
+    }
+
+    private static func normalizedRawTitle(_ title: String?) -> String {
+        title?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
 
     private static func legacyTitle(

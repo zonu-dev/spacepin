@@ -1,0 +1,128 @@
+{
+  "en": {
+    "subtitle": "Pin notes and images across Spaces",
+    "keywords": "notes,pin,sticky,image,floating,desktop,spaces,overlay,reference,productivity",
+    "shortDescription": "Keep notes and images visible in floating windows across macOS Spaces.",
+    "fullDescription": "SpacePin is a lightweight menu bar app for keeping notes and images close at hand. Create note pins, import image pins, and arrange multiple floating panels around your desktop. Each pin can be moved, resized, locked, collapsed, duplicated, made click-through, and restored after relaunch.",
+    "reviewNotes": "SpacePin is a menu bar utility for macOS. Open it from the menu bar icon, then use New Note Pin or Import Image to create floating pins. The floating windows are implemented with public AppKit NSPanel APIs."
+  },
+  "ja": {
+    "subtitle": "ノートと画像をSpacesをまたいで固定",
+    "keywords": "ノート,ピン,付箋,画像,フローティング,デスクトップ,Spaces,オーバーレイ,参照,仕事効率化",
+    "shortDescription": "macOS Spaces をまたいで、ノートと画像をフローティングウィンドウで常に表示します。",
+    "fullDescription": "SpacePin は、必要なノートや画像をすぐ近くに置いておける軽量なメニューバーアプリです。ノートピンを作成したり、画像ピンを読み込んだりして、複数のフローティングパネルをデスクトップ上に配置できます。各ピンは移動、サイズ変更、ロック、折りたたみ、複製、クリック透過の切り替えに対応し、再起動後も復元されます。",
+    "reviewNotes": "SpacePin は macOS 用のメニューバーユーティリティです。メニューバーアイコンから開き、［新しいノートピン］または［画像を読み込む］でフローティングピンを作成してください。フローティングウィンドウは公開 AppKit の NSPanel API で実装しています。"
+  },
+  "fr": {
+    "subtitle": "Épinglez notes et images entre les Spaces",
+    "keywords": "notes,épingle,post-it,image,flottant,bureau,spaces,superposition,référence,productivité",
+    "shortDescription": "Gardez notes et images visibles dans des fenêtres flottantes à travers les Spaces macOS.",
+    "fullDescription": "SpacePin est une app légère de barre des menus qui garde vos notes et images importantes à portée de main. Créez des notes épinglées, importez des images épinglées et disposez plusieurs panneaux flottants sur votre bureau. Chaque épingle peut être déplacée, redimensionnée, verrouillée, réduite, dupliquée, rendue transparente aux clics et restaurée après relance.",
+    "reviewNotes": "SpacePin est un utilitaire de barre des menus pour macOS. Ouvrez l'app depuis l'icône de la barre des menus, puis utilisez Nouvelle note épinglée ou Importer une image pour créer des épingles flottantes. Les fenêtres flottantes utilisent les API publiques AppKit NSPanel."
+  },
+  "de": {
+    "subtitle": "Notizen und Bilder über Spaces anheften",
+    "keywords": "notizen,pin,haftnotiz,bild,schwebend,desktop,spaces,overlay,referenz,produktivität",
+    "shortDescription": "Halten Sie Notizen und Bilder in schwebenden Fenstern über macOS Spaces hinweg sichtbar.",
+    "fullDescription": "SpacePin ist eine leichte Menüleisten-App, mit der wichtige Notizen und Bilder immer in Reichweite bleiben. Erstellen Sie Notiz-Pins, importieren Sie Bild-Pins und platzieren Sie mehrere schwebende Panels auf Ihrem Schreibtisch. Jeder Pin kann bewegt, skaliert, gesperrt, eingeklappt, dupliziert, klickdurchlässig gemacht und nach einem Neustart wiederhergestellt werden.",
+    "reviewNotes": "SpacePin ist ein Menüleisten-Dienstprogramm für macOS. Öffnen Sie die App über das Symbol in der Menüleiste und verwenden Sie dann Neuer Notiz-Pin oder Bild importieren, um schwebende Pins zu erstellen. Die schwebenden Fenster basieren auf öffentlichen AppKit-NSPanel-APIs."
+  },
+  "es": {
+    "subtitle": "Fija notas e imágenes entre Spaces",
+    "keywords": "notas,pin,adhesiva,imagen,flotante,escritorio,spaces,superposición,referencia,productividad",
+    "shortDescription": "Mantén notas e imágenes visibles en ventanas flotantes a través de los Spaces de macOS.",
+    "fullDescription": "SpacePin es una app ligera de barra de menús para mantener notas e imágenes importantes siempre a mano. Crea pins de notas, importa pins de imágenes y organiza varios paneles flotantes por tu escritorio. Cada pin se puede mover, redimensionar, bloquear, contraer, duplicar, hacer transparente al clic y restaurar después de volver a abrir la app.",
+    "reviewNotes": "SpacePin es una utilidad de barra de menús para macOS. Ábrela desde el icono de la barra de menús y usa Nuevo pin de nota o Importar imagen para crear pins flotantes. Las ventanas flotantes están implementadas con las API públicas NSPanel de AppKit."
+  },
+  "pt-BR": {
+    "subtitle": "Fixe notas e imagens entre Spaces",
+    "keywords": "notas,pin,adesivo,imagem,flutuante,desktop,spaces,sobreposição,referência,produtividade",
+    "shortDescription": "Mantenha notas e imagens visíveis em janelas flutuantes entre os Spaces do macOS.",
+    "fullDescription": "SpacePin é um app leve de barra de menus para manter notas e imagens importantes sempre por perto. Crie pins de notas, importe pins de imagens e organize vários painéis flutuantes pela área de trabalho. Cada pin pode ser movido, redimensionado, bloqueado, recolhido, duplicado, configurado com clique através e restaurado após reabrir o app.",
+    "reviewNotes": "SpacePin é um utilitário de barra de menus para macOS. Abra o app pelo ícone da barra de menus e use Novo pin de nota ou Importar imagem para criar pins flutuantes. As janelas flutuantes usam as APIs públicas NSPanel do AppKit."
+  },
+  "ru": {
+    "subtitle": "Закрепляйте заметки и изображения между Spaces",
+    "keywords": "заметки,пин,стикер,изображение,плавающий,рабочий стол,spaces,оверлей,справка,продуктивность",
+    "shortDescription": "Держите заметки и изображения в плавающих окнах, видимых во всех Spaces macOS.",
+    "fullDescription": "SpacePin — это легкое приложение в строке меню, которое держит важные заметки и изображения под рукой. Создавайте закрепленные заметки, импортируйте закрепленные изображения и размещайте несколько плавающих панелей на рабочем столе. Каждый пин можно перемещать, изменять по размеру, блокировать, сворачивать, дублировать, делать сквозным для кликов и восстанавливать после перезапуска.",
+    "reviewNotes": "SpacePin — это утилита для строки меню macOS. Откройте приложение через значок в строке меню и используйте Новая заметка-закрепление или Импортировать изображение, чтобы создать плавающие пины. Плавающие окна реализованы на публичных API AppKit NSPanel."
+  },
+  "ar": {
+    "subtitle": "ثبّت الملاحظات والصور عبر المساحات",
+    "keywords": "ملاحظات,تثبيت,ملصق,صورة,عائم,سطح المكتب,Spaces,تراكب,مرجع,إنتاجية",
+    "shortDescription": "أبقِ الملاحظات والصور ظاهرة في نوافذ عائمة عبر مساحات macOS.",
+    "fullDescription": "SpacePin هو تطبيق خفيف لشريط القوائم يحافظ على الملاحظات والصور المهمة قريبة منك. أنشئ تثبيتات للملاحظات، واستورد تثبيتات للصور، ورتب عدة لوحات عائمة حول سطح المكتب. يمكن نقل كل تثبيت وتغيير حجمه وقفله وطيّه وتكراره وجعله نافذًا للنقر واستعادته بعد إعادة التشغيل.",
+    "reviewNotes": "SpacePin هو أداة لشريط القوائم على macOS. افتح التطبيق من أيقونة شريط القوائم ثم استخدم تثبيت ملاحظة جديدة أو استيراد صورة لإنشاء تثبيتات عائمة. النوافذ العائمة مبنية باستخدام واجهات AppKit NSPanel العامة."
+  },
+  "tr": {
+    "subtitle": "Notları ve görselleri Spaces arasında sabitleyin",
+    "keywords": "notlar,pim,yapışkan,görsel,yüzen,masaüstü,spaces,kaplama,referans,üretkenlik",
+    "shortDescription": "Notları ve görselleri macOS Spaces arasında yüzen pencerelerde görünür tutun.",
+    "fullDescription": "SpacePin, önemli notları ve görselleri elinizin altında tutan hafif bir menü çubuğu uygulamasıdır. Not pimleri oluşturun, görsel pimleri içe aktarın ve masaüstünüzde birden fazla yüzen panel düzenleyin. Her pim taşınabilir, yeniden boyutlandırılabilir, kilitlenebilir, daraltılabilir, çoğaltılabilir, tıklama geçişli yapılabilir ve yeniden açılışta geri yüklenebilir.",
+    "reviewNotes": "SpacePin, macOS için bir menü çubuğu yardımcı programıdır. Uygulamayı menü çubuğu simgesinden açın, ardından Yeni not pimi veya Görsel içe aktar ile yüzen pimler oluşturun. Yüzen pencereler, herkese açık AppKit NSPanel API'leriyle uygulanmıştır."
+  },
+  "ko": {
+    "subtitle": "노트와 이미지를 Spaces 전반에 고정",
+    "keywords": "노트,핀,스티키,이미지,플로팅,데스크톱,Spaces,오버레이,참조,생산성",
+    "shortDescription": "macOS Spaces 전반에서 노트와 이미지를 플로팅 창으로 계속 표시하세요.",
+    "fullDescription": "SpacePin은 중요한 노트와 이미지를 가까이에 둘 수 있게 해 주는 가벼운 메뉴 막대 앱입니다. 노트 핀을 만들고 이미지 핀을 가져와 데스크톱 곳곳에 여러 개의 플로팅 패널을 배치할 수 있습니다. 각 핀은 이동, 크기 조절, 잠금, 접기, 복제, 클릭 통과 설정, 재실행 후 복원까지 지원합니다.",
+    "reviewNotes": "SpacePin은 macOS용 메뉴 막대 유틸리티입니다. 메뉴 막대 아이콘에서 앱을 연 뒤 새 노트 핀 또는 이미지 가져오기를 사용해 플로팅 핀을 만드세요. 플로팅 창은 공개 AppKit NSPanel API로 구현되어 있습니다."
+  },
+  "zh-Hans": {
+    "subtitle": "跨 Spaces 固定便签与图像",
+    "keywords": "便签,置顶,贴纸,图像,悬浮,桌面,Spaces,叠加,参考,效率",
+    "shortDescription": "在 macOS Spaces 之间以悬浮窗口方式持续显示便签和图像。",
+    "fullDescription": "SpacePin 是一款轻量级菜单栏应用，可让重要的便签和图像始终近在手边。你可以创建便签置顶项、导入图像置顶项，并在桌面上摆放多个悬浮面板。每个置顶项都支持移动、调整大小、锁定、折叠、复制、点击穿透，并可在重新启动后恢复。",
+    "reviewNotes": "SpacePin 是一款 macOS 菜单栏工具。请从菜单栏图标打开应用，然后使用“新建便签置顶项”或“导入图像”创建悬浮置顶项。悬浮窗口基于公开的 AppKit NSPanel API 实现。"
+  },
+  "zh-Hant": {
+    "subtitle": "跨 Spaces 固定便條與影像",
+    "keywords": "便條,置頂,貼紙,影像,浮動,桌面,Spaces,覆蓋,參考,生產力",
+    "shortDescription": "在 macOS Spaces 之間以浮動視窗持續顯示便條與影像。",
+    "fullDescription": "SpacePin 是一款輕量的選單列 App，讓重要便條與影像始終保持在手邊。你可以建立便條置頂項、匯入影像置頂項，並在桌面上排列多個浮動面板。每個置頂項都支援移動、調整大小、鎖定、收合、複製、點擊穿透，並可在重新啟動後還原。",
+    "reviewNotes": "SpacePin 是 macOS 的選單列工具。請從選單列圖示開啟 App，然後使用「新增便條置頂項」或「匯入影像」建立浮動置頂項。浮動視窗以公開的 AppKit NSPanel API 實作。"
+  },
+  "hi": {
+    "subtitle": "नोट और चित्र Spaces में पिन रखें",
+    "keywords": "नोट,पिन,स्टिकी,चित्र,फ्लोटिंग,डेस्कटॉप,Spaces,ओवरले,संदर्भ,उत्पादकता",
+    "shortDescription": "macOS Spaces में फ्लोटिंग विंडो के रूप में नोट और चित्र हमेशा दिखाई दें।",
+    "fullDescription": "SpacePin एक हल्का मेन्यू बार ऐप है जो महत्वपूर्ण नोट और चित्र हमेशा पास रखता है। नोट पिन बनाएँ, चित्र पिन आयात करें और अपने डेस्कटॉप पर कई फ्लोटिंग पैनल सजाएँ। हर पिन को खिसकाया, आकार बदला, लॉक किया, समेटा, डुप्लिकेट किया, क्लिक-थ्रू बनाया और दोबारा खोलने पर बहाल किया जा सकता है।",
+    "reviewNotes": "SpacePin macOS के लिए एक मेन्यू बार उपयोगिता है। ऐप को मेन्यू बार आइकन से खोलें, फिर नया नोट पिन या चित्र आयात करें का उपयोग करके फ्लोटिंग पिन बनाएँ। फ्लोटिंग विंडो सार्वजनिक AppKit NSPanel API पर आधारित हैं।"
+  },
+  "id": {
+    "subtitle": "Sematkan catatan dan gambar antar Spaces",
+    "keywords": "catatan,pin,sticky,gambar,mengambang,desktop,spaces,overlay,referensi,produktivitas",
+    "shortDescription": "Jaga catatan dan gambar tetap terlihat di jendela mengambang di seluruh macOS Spaces.",
+    "fullDescription": "SpacePin adalah app bar menu ringan untuk menjaga catatan dan gambar penting tetap dekat. Buat pin catatan, impor pin gambar, dan tata beberapa panel mengambang di desktop Anda. Setiap pin bisa dipindahkan, diubah ukurannya, dikunci, diciutkan, diduplikasi, dibuat klik tembus, dan dipulihkan setelah app dibuka kembali.",
+    "reviewNotes": "SpacePin adalah utilitas bar menu untuk macOS. Buka app dari ikon bar menu, lalu gunakan Pin catatan baru atau Impor gambar untuk membuat pin mengambang. Jendela mengambang diimplementasikan dengan API publik AppKit NSPanel."
+  },
+  "th": {
+    "subtitle": "ปักหมุดโน้ตและรูปภาพข้าม Spaces",
+    "keywords": "โน้ต,พิน,สติกกี้,รูปภาพ,ลอยตัว,เดสก์ท็อป,Spaces,โอเวอร์เลย์,อ้างอิง,ประสิทธิภาพ",
+    "shortDescription": "คงการมองเห็นโน้ตและรูปภาพในหน้าต่างลอยตัวข้าม macOS Spaces",
+    "fullDescription": "SpacePin เป็นแอปแถบเมนูขนาดเบาที่ช่วยให้โน้ตและรูปภาพสำคัญอยู่ใกล้มือเสมอ สร้างพินโน้ต นำเข้าพินรูปภาพ และจัดวางแผงลอยตัวหลายอันบนเดสก์ท็อปได้ แต่ละพินสามารถย้าย ปรับขนาด ล็อก ยุบ ทำซ้ำ เปิดคลิกทะลุ และกู้คืนกลับมาได้หลังเปิดแอปใหม่",
+    "reviewNotes": "SpacePin เป็นยูทิลิตีสำหรับ macOS บนแถบเมนู เปิดแอปจากไอคอนบนแถบเมนู แล้วใช้พินโน้ตใหม่หรือ นำเข้ารูปภาพ เพื่อสร้างพินลอยตัว หน้าต่างลอยตัวใช้ API สาธารณะ AppKit NSPanel"
+  },
+  "vi": {
+    "subtitle": "Ghim ghi chú và hình ảnh giữa các Spaces",
+    "keywords": "ghi chú,ghim,sticky,hình ảnh,nổi,máy tính,spaces,lớp phủ,tham chiếu,năng suất",
+    "shortDescription": "Giữ ghi chú và hình ảnh luôn hiện trong các cửa sổ nổi trên khắp macOS Spaces.",
+    "fullDescription": "SpacePin là ứng dụng thanh menu gọn nhẹ giúp giữ ghi chú và hình ảnh quan trọng luôn trong tầm mắt. Tạo ghim ghi chú, nhập ghim hình ảnh và sắp xếp nhiều bảng nổi quanh màn hình nền. Mỗi ghim có thể được di chuyển, đổi kích thước, khóa, thu gọn, nhân bản, bật nhấp xuyên và khôi phục sau khi mở lại ứng dụng.",
+    "reviewNotes": "SpacePin là tiện ích thanh menu dành cho macOS. Mở ứng dụng từ biểu tượng trên thanh menu rồi dùng Ghim ghi chú mới hoặc Nhập hình ảnh để tạo ghim nổi. Các cửa sổ nổi được triển khai bằng API AppKit NSPanel công khai."
+  },
+  "uk": {
+    "subtitle": "Закріплюйте нотатки й зображення між Spaces",
+    "keywords": "нотатки,пін,стікер,зображення,плаваючий,робочий стіл,spaces,накладання,довідка,продуктивність",
+    "shortDescription": "Тримайте нотатки й зображення видимими у плаваючих вікнах між просторами macOS.",
+    "fullDescription": "SpacePin — це легкий застосунок у рядку меню, який тримає важливі нотатки та зображення поруч. Створюйте закріплення нотаток, імпортуйте закріплення зображень і розміщуйте кілька плаваючих панелей на робочому столі. Кожне закріплення можна переміщати, змінювати за розміром, блокувати, згортати, дублювати, робити наскрізним для натискань і відновлювати після повторного запуску.",
+    "reviewNotes": "SpacePin — це утиліта рядка меню для macOS. Відкрийте застосунок з піктограми рядка меню, а потім використайте Нове закріплення нотатки або Імпортувати зображення, щоб створити плаваючі закріплення. Плаваючі вікна реалізовані на публічних API AppKit NSPanel."
+  },
+  "ms": {
+    "subtitle": "Pin nota dan imej merentas Spaces",
+    "keywords": "nota,pin,pelekat,imej,terapung,desktop,spaces,lapisan,rujukan,produktiviti",
+    "shortDescription": "Pastikan nota dan imej sentiasa kelihatan dalam tetingkap terapung merentas macOS Spaces.",
+    "fullDescription": "SpacePin ialah app bar menu ringan untuk memastikan nota dan imej penting sentiasa dekat. Cipta pin nota, import pin imej, dan susun beberapa panel terapung di desktop anda. Setiap pin boleh dialih, diubah saiz, dikunci, diruntuhkan, diduplikasi, dijadikan klik tembus, dan dipulihkan selepas app dibuka semula.",
+    "reviewNotes": "SpacePin ialah utiliti bar menu untuk macOS. Buka app daripada ikon bar menu, kemudian gunakan Pin nota baharu atau Import imej untuk mencipta pin terapung. Tetingkap terapung dilaksanakan dengan API awam AppKit NSPanel."
+  }
+}

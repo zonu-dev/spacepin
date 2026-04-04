@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "41DAFC7B1EDE457804C786A4"
+               BlueprintIdentifier = "FD269A87A362AA8EED097713"
                BuildableName = "SpacePin.app"
                BlueprintName = "SpacePin"
                ReferencedContainer = "container:SpacePin.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8E5625EE8E8215896B3AD7E4"
+               BlueprintIdentifier = "4694E5B62B5F9418084888A6"
                BuildableName = "SpacePinCoreTests.xctest"
                BlueprintName = "SpacePinCoreTests"
                ReferencedContainer = "container:SpacePin.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8E5625EE8E8215896B3AD7E4"
+               BlueprintIdentifier = "4694E5B62B5F9418084888A6"
                BuildableName = "SpacePinCoreTests.xctest"
                BlueprintName = "SpacePinCoreTests"
                ReferencedContainer = "container:SpacePin.xcodeproj">

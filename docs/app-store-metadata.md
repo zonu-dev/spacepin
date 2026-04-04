@@ -1,5 +1,7 @@
 # SpacePin App Store Metadata Draft
 
+Localized variants for the current runtime locale set are available in [app-store-metadata-localizations.json](app-store-metadata-localizations.json).
+
 ## App Name
 
 `SpacePin`

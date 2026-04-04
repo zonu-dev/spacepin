@@ -10,7 +10,7 @@ final class ManagerWindowController: NSWindowController, NSWindowDelegate {
         )
 
         let window = NSWindow(contentViewController: hostingController)
-        window.title = "SpacePin"
+        window.title = L10n.text("app.name", fallback: "SpacePin")
         window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         window.setContentSize(NSSize(width: 560, height: 500))
         window.minSize = NSSize(width: 520, height: 420)

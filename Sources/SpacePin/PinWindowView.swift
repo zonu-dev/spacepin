@@ -47,7 +47,7 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
     private let imageContainer = NSView()
     private let imageView = ShrinkableImageView()
     private let placeholderIcon = NSImageView()
-    private let placeholderLabel = NSTextField(labelWithString: "Image could not be loaded.")
+    private let placeholderLabel = NSTextField(labelWithString: "")
     private var recordCancellable: AnyCancellable?
     private var isEditingTitle = false
 
@@ -157,7 +157,7 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
         let menu = NSMenu()
         for preset in NoteColorPreset.allCases {
             let menuItem = NSMenuItem(
-                title: preset.displayName,
+                title: L10n.noteColorName(preset),
                 action: #selector(handleColorSelection(_:)),
                 keyEquivalent: ""
             )
@@ -267,13 +267,13 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
 
         headerDragView.translatesAutoresizingMaskIntoConstraints = false
         headerDragView.canDragWindow = !item.record.locked
-        headerDragView.toolTip = item.record.locked ? nil : "Drag to move"
+        headerDragView.toolTip = item.record.locked ? nil : L10n.text("tooltip.drag_to_move", fallback: "Drag to move")
 
         clickThroughIconView.translatesAutoresizingMaskIntoConstraints = false
         clickThroughIconView.symbolConfiguration = NSImage.SymbolConfiguration(pointSize: 12, weight: .semibold)
         clickThroughIconView.image = NSImage(
             systemSymbolName: "hand.raised.slash",
-            accessibilityDescription: "Click-through enabled"
+            accessibilityDescription: L10n.text("accessibility.click_through_enabled", fallback: "Click-through enabled")
         )
         clickThroughIconView.isHidden = true
         NSLayoutConstraint.activate([
@@ -281,11 +281,11 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
             clickThroughIconView.heightAnchor.constraint(equalToConstant: 14),
         ])
 
-        colorButton.toolTip = "Change Note Color"
-        lockButton.toolTip = "Toggle Lock"
-        collapseButton.toolTip = "Collapse Pin"
-        duplicateButton.toolTip = "Duplicate Pin"
-        deleteButton.toolTip = "Delete Pin"
+        colorButton.toolTip = L10n.text("tooltip.change_note_color", fallback: "Change Note Color")
+        lockButton.toolTip = L10n.text("tooltip.toggle_lock", fallback: "Toggle Lock")
+        collapseButton.toolTip = L10n.text("tooltip.collapse_pin", fallback: "Collapse Pin")
+        duplicateButton.toolTip = L10n.text("tooltip.duplicate_pin", fallback: "Duplicate Pin")
+        deleteButton.toolTip = L10n.text("tooltip.delete_pin", fallback: "Delete Pin")
 
         trailingStack.addArrangedSubview(clickThroughIconView)
         trailingStack.addArrangedSubview(colorButton)
@@ -397,11 +397,15 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
         placeholderIcon.symbolConfiguration = NSImage.SymbolConfiguration(pointSize: 28, weight: .medium)
         placeholderIcon.image = NSImage(
             systemSymbolName: "photo",
-            accessibilityDescription: "Missing image"
+            accessibilityDescription: L10n.text("accessibility.missing_image", fallback: "Missing image")
         )
         placeholderIcon.contentTintColor = .white
         placeholderIcon.alphaValue = 0.85
 
+        placeholderLabel.stringValue = L10n.text(
+            "placeholder.image_failed_to_load",
+            fallback: "Image could not be loaded."
+        )
         placeholderLabel.textColor = NSColor.white.withAlphaComponent(0.85)
 
         placeholderStack.addArrangedSubview(placeholderIcon)
@@ -447,14 +451,18 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
         iconView.contentTintColor = headerTextColor
         iconView.canDragWindow = !record.locked
         if !isEditingTitle {
-            titleField.stringValue = record.displayTitle
+            titleField.stringValue = record.localizedDisplayTitle
         }
         titleField.textColor = headerTextColor
         titleField.canDragWindow = !record.locked
         titleField.canRename = !record.locked
-        titleField.toolTip = record.locked ? nil : "Double-click to rename"
+        titleField.toolTip = record.locked
+            ? nil
+            : L10n.text("tooltip.double_click_to_rename", fallback: "Double-click to rename")
         headerDragView.canDragWindow = !record.locked
-        headerDragView.toolTip = record.locked ? nil : "Drag to move"
+        headerDragView.toolTip = record.locked
+            ? nil
+            : L10n.text("tooltip.drag_to_move", fallback: "Drag to move")
 
         clickThroughIconView.contentTintColor = headerTextColor.withAlphaComponent(0.9)
         clickThroughIconView.isHidden = !record.clickThrough
@@ -462,14 +470,20 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
         colorButton.contentTintColor = isNote ? noteTheme.swatch : headerTextColor
         lockButton.image = NSImage(
             systemSymbolName: record.locked ? "lock.fill" : "lock.open",
-            accessibilityDescription: record.locked ? "Unlock Pin" : "Lock Pin"
+            accessibilityDescription: record.locked
+                ? L10n.text("accessibility.unlock_pin", fallback: "Unlock Pin")
+                : L10n.text("accessibility.lock_pin", fallback: "Lock Pin")
         )
         lockButton.contentTintColor = headerTextColor
         collapseButton.image = NSImage(
             systemSymbolName: record.isCollapsed ? "rectangle.expand.vertical" : "rectangle.compress.vertical",
-            accessibilityDescription: record.isCollapsed ? "Expand Pin" : "Collapse Pin"
+            accessibilityDescription: record.isCollapsed
+                ? L10n.text("accessibility.expand_pin", fallback: "Expand Pin")
+                : L10n.text("accessibility.collapse_pin", fallback: "Collapse Pin")
         )
-        collapseButton.toolTip = record.isCollapsed ? "Expand Pin" : "Collapse Pin"
+        collapseButton.toolTip = record.isCollapsed
+            ? L10n.text("tooltip.expand_pin", fallback: "Expand Pin")
+            : L10n.text("tooltip.collapse_pin", fallback: "Collapse Pin")
         collapseButton.contentTintColor = headerTextColor
         duplicateButton.contentTintColor = headerTextColor
         deleteButton.contentTintColor = headerTextColor
@@ -581,7 +595,7 @@ final class PinContentViewController: NSViewController, NSTextViewDelegate, NSTe
 
     private func commitTitleEdit() {
         item.setTitle(titleField.stringValue)
-        titleField.stringValue = item.record.displayTitle
+        titleField.stringValue = item.record.localizedDisplayTitle
     }
 }
 

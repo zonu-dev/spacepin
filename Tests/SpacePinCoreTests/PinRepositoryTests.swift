@@ -132,4 +132,23 @@ final class PinRepositoryTests: XCTestCase {
 
         XCTAssertEqual(loaded.first?.noteFontSize, 24)
     }
+
+    func testBlankRawTitleRoundTripsWithoutFreezingFallbackTitle() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        let record = PinRecord.makeNote(
+            frame: CGRect(x: 20, y: 40, width: 320, height: 240),
+            title: "",
+            noteText: ""
+        )
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.title, "")
+        XCTAssertEqual(loaded.first?.displayTitle, "Untitled")
+    }
 }

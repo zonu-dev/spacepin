@@ -19,7 +19,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "SpacePin",
-            dependencies: ["SpacePinCore"]
+            dependencies: ["SpacePinCore"],
+            resources: [
+                .process("Resources"),
+            ]
         ),
         .testTarget(
             name: "SpacePinCoreTests",
