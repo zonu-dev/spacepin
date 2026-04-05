@@ -65,6 +65,14 @@ To export a signed archive after archiving:
 scripts/export_app_store.sh
 ```
 
+To build a signed DMG for direct distribution:
+
+```bash
+scripts/build_release_dmg.sh
+```
+
+The direct-download DMG is then available at `.derived/SpacePin.dmg`.
+
 From Xcode:
 
 1. Open `SpacePin.xcodeproj` (or run `xed SpacePin.xcodeproj`).
