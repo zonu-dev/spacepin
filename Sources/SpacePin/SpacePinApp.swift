@@ -7,27 +7,34 @@ import SwiftUI
 struct SpacePinApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var coordinator: AppCoordinator
+    @StateObject private var launchAtLoginController: LaunchAtLoginController
 
     init() {
         let coordinator = AppCoordinator()
         coordinator.startIfNeeded()
+        let launchAtLoginController = LaunchAtLoginController()
         AppDelegate.pendingCoordinator = coordinator
+        AppDelegate.pendingLaunchAtLoginController = launchAtLoginController
         _coordinator = StateObject(wrappedValue: coordinator)
+        _launchAtLoginController = StateObject(wrappedValue: launchAtLoginController)
     }
 
     var body: some Scene {
         Settings {
             SettingsView()
                 .environmentObject(coordinator)
+                .environmentObject(launchAtLoginController)
         }
     }
 }
 
 @MainActor
-final class AppDelegate: NSObject, NSApplicationDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     static var pendingCoordinator: AppCoordinator?
+    static var pendingLaunchAtLoginController: LaunchAtLoginController?
 
     private var coordinator: AppCoordinator?
+    private var launchAtLoginController: LaunchAtLoginController?
     private var statusItem: NSStatusItem?
     private var cancellables: Set<AnyCancellable> = []
 
@@ -36,18 +43,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if let pendingCoordinator = Self.pendingCoordinator {
+        if let pendingCoordinator = Self.pendingCoordinator,
+           let pendingLaunchAtLoginController = Self.pendingLaunchAtLoginController {
             Self.pendingCoordinator = nil
-            configure(with: pendingCoordinator)
+            Self.pendingLaunchAtLoginController = nil
+            configure(with: pendingCoordinator, launchAtLoginController: pendingLaunchAtLoginController)
         }
     }
 
-    private func configure(with coordinator: AppCoordinator) {
+    func applicationDidBecomeActive(_ notification: Notification) {
+        launchAtLoginController?.refreshStatus()
+    }
+
+    private func configure(with coordinator: AppCoordinator, launchAtLoginController: LaunchAtLoginController) {
         guard self.coordinator == nil else {
             return
         }
 
         self.coordinator = coordinator
+        self.launchAtLoginController = launchAtLoginController
         installStatusItemIfNeeded()
         observeCoordinator()
         rebuildMenu()
@@ -68,11 +82,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             button.toolTip = L10n.text("app.name", fallback: "SpacePin")
         }
         statusItem.menu = NSMenu()
+        statusItem.menu?.delegate = self
         self.statusItem = statusItem
     }
 
+    func menuWillOpen(_ menu: NSMenu) {
+        launchAtLoginController?.refreshStatus()
+    }
+
     private func observeCoordinator() {
-        guard let coordinator else {
+        guard let coordinator, let launchAtLoginController else {
             return
         }
 
@@ -89,10 +108,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.rebuildMenu()
             }
             .store(in: &cancellables)
+
+        launchAtLoginController.$status
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.rebuildMenu()
+            }
+            .store(in: &cancellables)
+
+        launchAtLoginController.$errorMessage
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.rebuildMenu()
+            }
+            .store(in: &cancellables)
     }
 
     private func rebuildMenu() {
-        guard let coordinator, let menu = statusItem?.menu else {
+        guard let coordinator, let launchAtLoginController, let menu = statusItem?.menu else {
             return
         }
 
@@ -116,6 +149,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             modifiers: [.command, .option],
             action: #selector(importImage)
         ))
+        menu.addItem(makeToggleItem(
+            title: L10n.text("settings.launch_at_login", fallback: "Launch at login"),
+            isOn: launchAtLoginController.isEnabled,
+            action: #selector(toggleLaunchAtLogin)
+        ))
+
+        if launchAtLoginController.requiresApproval {
+            menu.addItem(makeDisabledItem(title: L10n.text(
+                "settings.launch_at_login_requires_approval",
+                fallback: "Allow SpacePin in System Settings > General > Login Items."
+            )))
+            menu.addItem(makeActionItem(
+                title: L10n.text("action.open_login_items_settings", fallback: "Open Login Items Settings"),
+                action: #selector(openLoginItemsSettings)
+            ))
+        }
 
         if !coordinator.pins.isEmpty {
             menu.addItem(makeActionItem(
@@ -132,9 +181,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             menu.addItem(makeDisabledItem(title: L10n.text("label.no_active_pins", fallback: "No active pins")))
         }
 
-        if let lastErrorMessage = coordinator.lastErrorMessage, !lastErrorMessage.isEmpty {
+        let errorMessages = [coordinator.lastErrorMessage, launchAtLoginController.errorMessage]
+            .compactMap { message -> String? in
+                guard let message, !message.isEmpty else {
+                    return nil
+                }
+
+                return message
+            }
+
+        if !errorMessages.isEmpty {
             menu.addItem(.separator())
-            menu.addItem(makeErrorItem(message: lastErrorMessage))
+            for message in errorMessages {
+                menu.addItem(makeErrorItem(message: message))
+            }
         }
 
         menu.addItem(.separator())
@@ -222,6 +282,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return item
     }
 
+    private func makeToggleItem(title: String, isOn: Bool, action: Selector) -> NSMenuItem {
+        let item = makeActionItem(title: title, action: action)
+        item.state = isOn ? .on : .off
+        return item
+    }
+
     private func makeDisabledItem(title: String) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
         item.isEnabled = false
@@ -260,6 +326,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc
     private func importImage() {
         coordinator?.presentImageImporter()
+    }
+
+    @objc
+    private func toggleLaunchAtLogin() {
+        guard let launchAtLoginController else {
+            return
+        }
+
+        launchAtLoginController.setEnabled(!launchAtLoginController.isEnabled)
+    }
+
+    @objc
+    private func openLoginItemsSettings() {
+        launchAtLoginController?.openSystemSettings()
     }
 
     @objc
@@ -349,6 +429,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 private struct SettingsView: View {
     @EnvironmentObject private var coordinator: AppCoordinator
+    @EnvironmentObject private var launchAtLoginController: LaunchAtLoginController
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -357,6 +438,41 @@ private struct SettingsView: View {
 
             Text(L10n.text("settings.storage_path", fallback: "Pins are stored in ~/Library/Application Support/SpacePin."))
                 .foregroundStyle(.secondary)
+
+            Toggle(
+                L10n.text("settings.launch_at_login", fallback: "Launch at login"),
+                isOn: Binding(get: {
+                    launchAtLoginController.isEnabled
+                }, set: { newValue in
+                    launchAtLoginController.setEnabled(newValue)
+                })
+            )
+
+            Text(L10n.text(
+                "settings.launch_at_login_help",
+                fallback: "Automatically open SpacePin when you log in."
+            ))
+            .font(.callout)
+            .foregroundStyle(.secondary)
+
+            if launchAtLoginController.requiresApproval {
+                Text(L10n.text(
+                    "settings.launch_at_login_requires_approval",
+                    fallback: "Allow SpacePin in System Settings > General > Login Items."
+                ))
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+                Button(L10n.text("action.open_login_items_settings", fallback: "Open Login Items Settings")) {
+                    launchAtLoginController.openSystemSettings()
+                }
+            }
+
+            if let errorMessage = launchAtLoginController.errorMessage, !errorMessage.isEmpty {
+                Text(errorMessage)
+                    .font(.callout)
+                    .foregroundStyle(.red)
+            }
 
             Button(L10n.text("action.open_manager", fallback: "Open Manager")) {
                 coordinator.showManagerWindow()

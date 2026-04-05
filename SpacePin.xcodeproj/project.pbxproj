@@ -21,6 +21,7 @@
 		4C4F1DD3D81F1275F2889734 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97833F64BEC271624F898FD2 /* Assets.xcassets */; };
 		5B05C779CBC38EF12EF5D315 /* PinRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91E017331666D410EF26F4F /* PinRepositoryTests.swift */; };
 		5D0D1032FE6C60306B7D7676 /* PinRecordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEB8D8665B91A0E74B5EA13 /* PinRecordTests.swift */; };
+		5C9D7D0A1E4B4EAD8A7F1234 /* LaunchAtLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9D7D0A1E4B4EAD8A7F1235 /* LaunchAtLoginController.swift */; };
 		785C4760A24D91548DCF8ADA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3637D7096646286E0A8FDBD /* AppCoordinator.swift */; };
 		7E130E00FD7E19EFD4473389 /* PinWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37792651177A8B4BE6C7D58 /* PinWindowView.swift */; };
 		81033074567364C52B0A6708 /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A23E984C890B99B4A1F089 /* TestSupport.swift */; };
@@ -65,6 +66,7 @@
 		79AF7C7D4F421D1C7DD30190 /* localizations.json */ = {isa = PBXFileReference; includeInIndex = 1; path = localizations.json; sourceTree = "<group>"; };
 		8182E7CDFB9087C0EA28FCC7 /* SpacePinPaths.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpacePinPaths.swift; sourceTree = "<group>"; };
 		87500930248A7395117C73BF /* PinRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PinRecord.swift; sourceTree = "<group>"; };
+		5C9D7D0A1E4B4EAD8A7F1235 /* LaunchAtLoginController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginController.swift; sourceTree = "<group>"; };
 		90BEADC2A2B18794BA4D9C20 /* AppIcon.icon */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = AppIcon.icon; sourceTree = "<group>"; };
 		97833F64BEC271624F898FD2 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0E93ECEB57FAB8AE4E0BAC3 /* SpacePin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpacePin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +177,7 @@
 			children = (
 				5E058C8C872A361214EAADBA /* Resources */,
 				A3637D7096646286E0A8FDBD /* AppCoordinator.swift */,
+				5C9D7D0A1E4B4EAD8A7F1235 /* LaunchAtLoginController.swift */,
 				04A9BDE1F87E125DEE3EF326 /* Localization.swift */,
 				2105DC90F1D252401F5FB3B3 /* ManagerView.swift */,
 				B8719A5B1DC7DCAF3EC67EAC /* ManagerWindowController.swift */,
@@ -388,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				785C4760A24D91548DCF8ADA /* AppCoordinator.swift in Sources */,
+				5C9D7D0A1E4B4EAD8A7F1234 /* LaunchAtLoginController.swift in Sources */,
 				492E37881CA074D1F42108EA /* Localization.swift in Sources */,
 				1DBBABF06D0F0E45AD8C7EC6 /* ManagerView.swift in Sources */,
 				A3D67859327A2BA2007EC02B /* ManagerWindowController.swift in Sources */,
