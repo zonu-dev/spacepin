@@ -4,6 +4,7 @@
     "keywords": "notes,pin,sticky,image,floating,desktop,spaces,overlay,reference,productivity",
     "shortDescription": "Keep notes and images visible in floating windows across macOS Spaces.",
     "fullDescription": "SpacePin is a lightweight menu bar app for keeping notes and images close at hand. Create note pins, import image pins, and arrange multiple floating panels around your desktop. Each pin can be moved, resized, locked, collapsed, duplicated, made click-through, and restored after relaunch.",
+    "whatsNew": "Improved menu bar launch reliability.\nAdded optional launch at login with a one-time setup prompt.\nImproved startup visibility and stability.",
     "reviewNotes": "SpacePin is a menu bar utility for macOS. Open it from the menu bar icon, then use New Note Pin or Import Image to create floating pins. The floating windows are implemented with public AppKit NSPanel APIs."
   },
   "ja": {
@@ -11,6 +12,7 @@
     "keywords": "ノート,ピン,付箋,画像,フローティング,デスクトップ,Spaces,オーバーレイ,参照,仕事効率化",
     "shortDescription": "macOS Spaces をまたいで、ノートと画像をフローティングウィンドウで常に表示します。",
     "fullDescription": "SpacePin は、必要なノートや画像をすぐ近くに置いておける軽量なメニューバーアプリです。ノートピンを作成したり、画像ピンを読み込んだりして、複数のフローティングパネルをデスクトップ上に配置できます。各ピンは移動、サイズ変更、ロック、折りたたみ、複製、クリック透過の切り替えに対応し、再起動後も復元されます。",
+    "whatsNew": "メニューバー起動の安定性を改善しました。\nログイン時起動を、初回確認付きで有効化できるようにしました。\n起動時の表示まわりの安定性を改善しました。",
     "reviewNotes": "SpacePin は macOS 用のメニューバーユーティリティです。メニューバーアイコンから開き、［新しいノートピン］または［画像を読み込む］でフローティングピンを作成してください。フローティングウィンドウは公開 AppKit の NSPanel API で実装しています。"
   },
   "fr": {

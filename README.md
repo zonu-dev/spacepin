@@ -20,7 +20,7 @@ SpacePin is a minimal native macOS menu bar app that shows note pins and image p
 - Language: Swift
 - UI: SwiftUI for the manager window, AppKit for the floating pin window contents
 - Floating windows: AppKit `NSPanel`
-- App shell: SwiftUI `MenuBarExtra` with accessory activation policy
+- App shell: AppKit `NSStatusItem` with accessory activation policy
 - Xcode app target: generated macOS app project with sandbox entitlements and asset catalog
 - Persistence: JSON in `~/Library/Application Support/SpacePin/pins.json`
 - Imported images: copied into `~/Library/Application Support/SpacePin/images/`
