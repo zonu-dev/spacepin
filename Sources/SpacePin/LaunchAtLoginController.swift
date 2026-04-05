@@ -3,13 +3,19 @@ import ServiceManagement
 
 @MainActor
 final class LaunchAtLoginController: ObservableObject {
+    private enum DefaultsKey {
+        static let suppressPrompt = "launchAtLoginPromptSuppressed"
+    }
+
     @Published private(set) var status: SMAppService.Status
     @Published private(set) var errorMessage: String?
 
     private let service: SMAppService
+    private let userDefaults: UserDefaults
 
-    init(service: SMAppService = .mainApp) {
+    init(service: SMAppService = .mainApp, userDefaults: UserDefaults = .standard) {
         self.service = service
+        self.userDefaults = userDefaults
         status = service.status
     }
 
@@ -28,8 +34,20 @@ final class LaunchAtLoginController: ObservableObject {
         status == .requiresApproval
     }
 
+    var shouldPromptOnLaunch: Bool {
+        !isEnabled && !isPromptSuppressed
+    }
+
+    var isPromptSuppressed: Bool {
+        userDefaults.bool(forKey: DefaultsKey.suppressPrompt)
+    }
+
     func refreshStatus() {
         status = service.status
+    }
+
+    func setPromptSuppressed(_ suppressed: Bool) {
+        userDefaults.set(suppressed, forKey: DefaultsKey.suppressPrompt)
     }
 
     func setEnabled(_ enabled: Bool) {

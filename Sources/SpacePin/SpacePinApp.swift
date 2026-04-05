@@ -37,6 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var launchAtLoginController: LaunchAtLoginController?
     private var statusItem: NSStatusItem?
     private var cancellables: Set<AnyCancellable> = []
+    private var hasScheduledLaunchAtLoginPrompt = false
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -65,6 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         installStatusItemIfNeeded()
         observeCoordinator()
         rebuildMenu()
+        scheduleLaunchAtLoginPromptIfNeeded()
     }
 
     private func installStatusItemIfNeeded() {
@@ -88,6 +90,64 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         launchAtLoginController?.refreshStatus()
+    }
+
+    private func scheduleLaunchAtLoginPromptIfNeeded() {
+        guard !hasScheduledLaunchAtLoginPrompt else {
+            return
+        }
+
+        hasScheduledLaunchAtLoginPrompt = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            self?.presentLaunchAtLoginPromptIfNeeded()
+        }
+    }
+
+    private func presentLaunchAtLoginPromptIfNeeded() {
+        guard let launchAtLoginController, launchAtLoginController.shouldPromptOnLaunch else {
+            return
+        }
+
+        let suppressButton = NSButton(
+            checkboxWithTitle: L10n.text(
+                "prompt.launch_at_login_do_not_ask_again",
+                fallback: "Don't ask again"
+            ),
+            target: nil,
+            action: nil
+        )
+
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = L10n.text(
+            "prompt.launch_at_login_message",
+            fallback: "Open SpacePin automatically when you log in?"
+        )
+        alert.informativeText = L10n.text(
+            "prompt.launch_at_login_info",
+            fallback: "You can change this later from the menu bar or Settings. macOS may ask you to approve SpacePin in Login Items."
+        )
+        alert.addButton(withTitle: L10n.text(
+            "prompt.launch_at_login_enable",
+            fallback: "Enable"
+        ))
+        alert.addButton(withTitle: L10n.text(
+            "prompt.not_now",
+            fallback: "Not Now"
+        ))
+        alert.accessoryView = suppressButton
+
+        NSApp.activate(ignoringOtherApps: true)
+        let response = alert.runModal()
+
+        if suppressButton.state == .on {
+            launchAtLoginController.setPromptSuppressed(true)
+        }
+
+        if response == .alertFirstButtonReturn {
+            launchAtLoginController.setEnabled(true)
+        }
     }
 
     private func observeCoordinator() {
