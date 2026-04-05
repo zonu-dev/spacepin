@@ -74,13 +74,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        let image = NSImage(
+            systemSymbolName: "pin.circle.fill",
+            accessibilityDescription: L10n.text("app.name", fallback: "SpacePin")
+        )
+        let itemLength = image == nil ? NSStatusItem.variableLength : NSStatusItem.squareLength
+        let statusItem = NSStatusBar.system.statusItem(withLength: itemLength)
         if let button = statusItem.button {
-            button.image = NSImage(
-                systemSymbolName: "pin.circle.fill",
-                accessibilityDescription: L10n.text("app.name", fallback: "SpacePin")
-            )
-            button.imagePosition = .imageOnly
+            if let image {
+                image.isTemplate = true
+                button.image = image
+                button.imagePosition = .imageOnly
+                button.title = ""
+            } else {
+                button.title = "SP"
+            }
             button.toolTip = L10n.text("app.name", fallback: "SpacePin")
         }
         statusItem.menu = NSMenu()
