@@ -93,6 +93,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         statusItem.menu = NSMenu()
         statusItem.menu?.delegate = self
+        statusItem.isVisible = true
         self.statusItem = statusItem
     }
 

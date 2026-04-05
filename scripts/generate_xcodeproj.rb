@@ -8,6 +8,7 @@ ROOT = Pathname(__dir__).join('..').expand_path
 PROJECT_PATH = ROOT.join('SpacePin.xcodeproj')
 DEPLOYMENT_TARGET = '13.0'
 APP_BUNDLE_ID = ENV.fetch('SPACEPIN_BUNDLE_ID', 'com.zoochigames.spacepin')
+APP_DEBUG_BUNDLE_ID = ENV.fetch('SPACEPIN_DEBUG_BUNDLE_ID', "#{APP_BUNDLE_ID}.debug")
 DEVELOPMENT_TEAM = ENV.fetch('SPACEPIN_TEAM_ID', 'TQW4K2Z6UW')
 MARKETING_VERSION = ENV.fetch('SPACEPIN_MARKETING_VERSION', '1.0.1')
 CURRENT_PROJECT_VERSION = ENV.fetch('SPACEPIN_BUILD_NUMBER', '2')
@@ -26,7 +27,7 @@ def add_group_files(group, glob)
   end
 end
 
-def configure_common_build_settings(target, bundle_id: nil, skip_install: 'NO')
+def configure_common_build_settings(target, bundle_id: nil, debug_bundle_id: nil, skip_install: 'NO')
   target.build_configurations.each do |config|
     config.build_settings['SWIFT_VERSION'] = '6.0'
     config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = DEPLOYMENT_TARGET
@@ -38,7 +39,13 @@ def configure_common_build_settings(target, bundle_id: nil, skip_install: 'NO')
     config.build_settings['SKIP_INSTALL'] = skip_install
     config.build_settings['ENABLE_HARDENED_RUNTIME'] = 'YES'
     config.build_settings['CODE_SIGNING_ALLOWED'] = 'YES'
-    config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = bundle_id if bundle_id
+    effective_bundle_id =
+      if config.name == 'Debug' && debug_bundle_id
+        debug_bundle_id
+      else
+        bundle_id
+      end
+    config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = effective_bundle_id if effective_bundle_id
     if DEVELOPMENT_TEAM && !DEVELOPMENT_TEAM.empty?
       config.build_settings['DEVELOPMENT_TEAM'] = DEVELOPMENT_TEAM
     else
@@ -65,9 +72,24 @@ app_target = project.new_target(:application, 'SpacePin', :osx, DEPLOYMENT_TARGE
 core_target = project.new_target(:static_library, 'SpacePinCore', :osx, DEPLOYMENT_TARGET)
 tests_target = project.new_target(:unit_test_bundle, 'SpacePinCoreTests', :osx, DEPLOYMENT_TARGET)
 
-configure_common_build_settings(app_target, bundle_id: APP_BUNDLE_ID, skip_install: 'NO')
-configure_common_build_settings(core_target, bundle_id: "#{APP_BUNDLE_ID}.core", skip_install: 'YES')
-configure_common_build_settings(tests_target, bundle_id: "#{APP_BUNDLE_ID}.tests", skip_install: 'YES')
+configure_common_build_settings(
+  app_target,
+  bundle_id: APP_BUNDLE_ID,
+  debug_bundle_id: APP_DEBUG_BUNDLE_ID,
+  skip_install: 'NO'
+)
+configure_common_build_settings(
+  core_target,
+  bundle_id: "#{APP_BUNDLE_ID}.core",
+  debug_bundle_id: "#{APP_DEBUG_BUNDLE_ID}.core",
+  skip_install: 'YES'
+)
+configure_common_build_settings(
+  tests_target,
+  bundle_id: "#{APP_BUNDLE_ID}.tests",
+  debug_bundle_id: "#{APP_DEBUG_BUNDLE_ID}.tests",
+  skip_install: 'YES'
+)
 
 app_target.build_configurations.each do |config|
   config.build_settings['INFOPLIST_FILE'] = 'Support/SpacePin-Info.plist'
