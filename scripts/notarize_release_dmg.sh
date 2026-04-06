@@ -57,7 +57,7 @@ submit_and_wait() {
   output="$(xcrun notarytool submit "$path" "${notary_args[@]}" --wait --output-format json)"
 
   ruby -rjson -e '
-    payload = JSON.parse(ARGF.read)
+    payload = JSON.parse(STDIN.read)
     status = payload["status"]
     id = payload["id"] || payload["submissionId"]
     unless status == "Accepted"
