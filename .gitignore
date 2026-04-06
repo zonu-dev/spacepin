@@ -1,6 +1,7 @@
 .DS_Store
 /.build
 /.derived
+/.derived-release
 /.localhome
 /Packages
 xcuserdata/
@@ -12,5 +13,6 @@ DerivedData/
 *.p12
 *.cer
 *.mobileprovision
+*.p8
 .env
 .env.*

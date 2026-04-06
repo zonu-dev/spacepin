@@ -1,7 +1,23 @@
 import AppKit
-import Combine
-import SpacePinCore
+import Foundation
 import SwiftUI
+
+enum AppLaunchMode {
+    case foreground
+    case background
+
+    init(processInfo: ProcessInfo = .processInfo) {
+        self = MenuBarBridge.isBackgroundLaunch(processInfo: processInfo) ? .background : .foreground
+    }
+
+    var shouldShowManagerOnLaunch: Bool {
+        self == .foreground
+    }
+
+    var shouldPromptForLaunchAtLogin: Bool {
+        self == .foreground
+    }
+}
 
 @main
 struct SpacePinApp: App {
@@ -15,6 +31,7 @@ struct SpacePinApp: App {
         let launchAtLoginController = LaunchAtLoginController()
         AppDelegate.pendingCoordinator = coordinator
         AppDelegate.pendingLaunchAtLoginController = launchAtLoginController
+        AppDelegate.pendingLaunchMode = AppLaunchMode()
         _coordinator = StateObject(wrappedValue: coordinator)
         _launchAtLoginController = StateObject(wrappedValue: launchAtLoginController)
     }
@@ -29,15 +46,16 @@ struct SpacePinApp: App {
 }
 
 @MainActor
-final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate {
     static var pendingCoordinator: AppCoordinator?
     static var pendingLaunchAtLoginController: LaunchAtLoginController?
+    static var pendingLaunchMode: AppLaunchMode?
 
     private var coordinator: AppCoordinator?
     private var launchAtLoginController: LaunchAtLoginController?
-    private var statusItem: NSStatusItem?
-    private var cancellables: Set<AnyCancellable> = []
+    private var launchMode: AppLaunchMode = .foreground
     private var hasScheduledLaunchAtLoginPrompt = false
+    private var commandObserver: NSObjectProtocol?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -48,12 +66,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
            let pendingLaunchAtLoginController = Self.pendingLaunchAtLoginController {
             Self.pendingCoordinator = nil
             Self.pendingLaunchAtLoginController = nil
+            launchMode = Self.pendingLaunchMode ?? .foreground
+            Self.pendingLaunchMode = nil
             configure(with: pendingCoordinator, launchAtLoginController: pendingLaunchAtLoginController)
         }
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
         launchAtLoginController?.refreshStatus()
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag {
+            coordinator?.showManagerWindow()
+        }
+
+        return false
     }
 
     private func configure(with coordinator: AppCoordinator, launchAtLoginController: LaunchAtLoginController) {
@@ -63,46 +91,68 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         self.coordinator = coordinator
         self.launchAtLoginController = launchAtLoginController
-        installStatusItemIfNeeded()
-        observeCoordinator()
-        rebuildMenu()
+        launchMenuBarHelperIfNeeded()
+        observeRemoteCommands()
+
+        if launchMode.shouldShowManagerOnLaunch {
+            coordinator.showManagerWindow()
+        }
+
         scheduleLaunchAtLoginPromptIfNeeded()
     }
 
-    private func installStatusItemIfNeeded() {
-        guard statusItem == nil else {
+    private func launchMenuBarHelperIfNeeded() {
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
             return
         }
 
-        let image = NSImage(
-            systemSymbolName: "pin.circle.fill",
-            accessibilityDescription: L10n.text("app.name", fallback: "SpacePin")
+        let helperBundleIdentifier = MenuBarBridge.helperBundleIdentifier(for: bundleIdentifier)
+        let helperURL = MenuBarBridge.helperAppURL()
+        MenuBarAppLauncher.launchIfNeeded(
+            bundleIdentifier: helperBundleIdentifier,
+            appURL: helperURL,
+            arguments: [],
+            activates: false
         )
-        let itemLength = image == nil ? NSStatusItem.variableLength : NSStatusItem.squareLength
-        let statusItem = NSStatusBar.system.statusItem(withLength: itemLength)
-        if let button = statusItem.button {
-            if let image {
-                image.isTemplate = true
-                button.image = image
-                button.imagePosition = .imageOnly
-                button.title = ""
-            } else {
-                button.title = "SP"
-            }
-            button.toolTip = L10n.text("app.name", fallback: "SpacePin")
-        }
-        statusItem.menu = NSMenu()
-        statusItem.menu?.delegate = self
-        statusItem.isVisible = true
-        self.statusItem = statusItem
     }
 
-    func menuWillOpen(_ menu: NSMenu) {
-        launchAtLoginController?.refreshStatus()
+    private func observeRemoteCommands() {
+        commandObserver = DistributedNotificationCenter.default().addObserver(
+            forName: MenuBarBridge.commandNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let command = MenuBarBridge.command(from: notification) else {
+                return
+            }
+
+            Task { @MainActor in
+                self?.handle(command: command)
+            }
+        }
+    }
+
+    private func handle(command: MenuBarCommand) {
+        guard let coordinator else {
+            return
+        }
+
+        switch command {
+        case .openManager:
+            coordinator.showManagerWindow()
+        case .newNotePin:
+            coordinator.createNotePin()
+        case .importImage:
+            coordinator.presentImageImporter()
+        case .bringAllPinsForward:
+            coordinator.bringAllPinsToFront()
+        case .quit:
+            NSApplication.shared.terminate(nil)
+        }
     }
 
     private func scheduleLaunchAtLoginPromptIfNeeded() {
-        guard !hasScheduledLaunchAtLoginPrompt else {
+        guard launchMode.shouldPromptForLaunchAtLogin, !hasScheduledLaunchAtLoginPrompt else {
             return
         }
 
@@ -157,342 +207,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if response == .alertFirstButtonReturn {
             launchAtLoginController.setEnabled(true)
         }
-    }
-
-    private func observeCoordinator() {
-        guard let coordinator, let launchAtLoginController else {
-            return
-        }
-
-        coordinator.$pins
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.rebuildMenu()
-            }
-            .store(in: &cancellables)
-
-        coordinator.$lastErrorMessage
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.rebuildMenu()
-            }
-            .store(in: &cancellables)
-
-        launchAtLoginController.$status
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.rebuildMenu()
-            }
-            .store(in: &cancellables)
-
-        launchAtLoginController.$errorMessage
-            .receive(on: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.rebuildMenu()
-            }
-            .store(in: &cancellables)
-    }
-
-    private func rebuildMenu() {
-        guard let coordinator, let launchAtLoginController, let menu = statusItem?.menu else {
-            return
-        }
-
-        menu.removeAllItems()
-
-        menu.addItem(makeActionItem(
-            title: L10n.text("action.open_manager", fallback: "Open Manager"),
-            keyEquivalent: "0",
-            modifiers: [.command, .option],
-            action: #selector(openManager)
-        ))
-        menu.addItem(makeActionItem(
-            title: L10n.text("action.new_note_pin", fallback: "New Note Pin"),
-            keyEquivalent: "n",
-            modifiers: [.command, .option],
-            action: #selector(createNotePin)
-        ))
-        menu.addItem(makeActionItem(
-            title: L10n.text("action.import_image", fallback: "Import Image…"),
-            keyEquivalent: "i",
-            modifiers: [.command, .option],
-            action: #selector(importImage)
-        ))
-        menu.addItem(makeToggleItem(
-            title: L10n.text("settings.launch_at_login", fallback: "Launch at login"),
-            isOn: launchAtLoginController.isEnabled,
-            action: #selector(toggleLaunchAtLogin)
-        ))
-
-        if launchAtLoginController.requiresApproval {
-            menu.addItem(makeDisabledItem(title: L10n.text(
-                "settings.launch_at_login_requires_approval",
-                fallback: "Allow SpacePin in System Settings > General > Login Items."
-            )))
-            menu.addItem(makeActionItem(
-                title: L10n.text("action.open_login_items_settings", fallback: "Open Login Items Settings"),
-                action: #selector(openLoginItemsSettings)
-            ))
-        }
-
-        if !coordinator.pins.isEmpty {
-            menu.addItem(makeActionItem(
-                title: L10n.text("action.bring_all_pins_forward", fallback: "Bring All Pins Forward"),
-                action: #selector(bringAllPinsForward)
-            ))
-            menu.addItem(.separator())
-
-            for item in coordinator.pins {
-                menu.addItem(makePinMenuItem(for: item))
-            }
-        } else {
-            menu.addItem(.separator())
-            menu.addItem(makeDisabledItem(title: L10n.text("label.no_active_pins", fallback: "No active pins")))
-        }
-
-        let errorMessages = [coordinator.lastErrorMessage, launchAtLoginController.errorMessage]
-            .compactMap { message -> String? in
-                guard let message, !message.isEmpty else {
-                    return nil
-                }
-
-                return message
-            }
-
-        if !errorMessages.isEmpty {
-            menu.addItem(.separator())
-            for message in errorMessages {
-                menu.addItem(makeErrorItem(message: message))
-            }
-        }
-
-        menu.addItem(.separator())
-        menu.addItem(makeActionItem(
-            title: L10n.format("action.quit_app", fallback: "Quit %@", L10n.text("app.name", fallback: "SpacePin")),
-            action: #selector(quitApp)
-        ))
-    }
-
-    private func makePinMenuItem(for item: PinItem) -> NSMenuItem {
-        let menuItem = NSMenuItem(title: item.displayTitle, action: nil, keyEquivalent: "")
-        let submenu = NSMenu(title: item.displayTitle)
-
-        submenu.addItem(makePinActionItem(
-            title: L10n.text("action.show", fallback: "Show"),
-            action: #selector(showPin(_:)),
-            id: item.id
-        ))
-        submenu.addItem(makePinActionItem(
-            title: L10n.text("action.duplicate", fallback: "Duplicate"),
-            action: #selector(duplicatePin(_:)),
-            id: item.id
-        ))
-        submenu.addItem(makePinActionItem(
-            title: item.record.locked
-                ? L10n.text("action.unlock", fallback: "Unlock")
-                : L10n.text("action.lock", fallback: "Lock"),
-            action: #selector(toggleLock(_:)),
-            id: item.id
-        ))
-        submenu.addItem(makePinActionItem(
-            title: item.record.clickThrough
-                ? L10n.text("action.disable_click_through", fallback: "Disable Click-through")
-                : L10n.text("action.enable_click_through", fallback: "Enable Click-through"),
-            action: #selector(toggleClickThrough(_:)),
-            id: item.id
-        ))
-
-        if item.record.kind == .note {
-            let colorMenuItem = NSMenuItem(title: L10n.text("label.color", fallback: "Color"), action: nil, keyEquivalent: "")
-            let colorMenu = NSMenu(title: colorMenuItem.title)
-
-            for preset in NoteColorPreset.allCases {
-                let colorItem = NSMenuItem(
-                    title: L10n.noteColorName(preset),
-                    action: #selector(setNoteColor(_:)),
-                    keyEquivalent: ""
-                )
-                colorItem.target = self
-                colorItem.representedObject = "\(item.id.uuidString)|\(preset.rawValue)"
-                colorItem.state = item.record.noteColorPreset == preset ? .on : .off
-                colorMenu.addItem(colorItem)
-            }
-
-            colorMenuItem.submenu = colorMenu
-            submenu.addItem(colorMenuItem)
-        }
-
-        submenu.addItem(makePinActionItem(
-            title: L10n.text("action.delete", fallback: "Delete"),
-            action: #selector(deletePin(_:)),
-            id: item.id
-        ))
-
-        menuItem.submenu = submenu
-        return menuItem
-    }
-
-    private func makeActionItem(
-        title: String,
-        keyEquivalent: String = "",
-        modifiers: NSEvent.ModifierFlags = [],
-        action: Selector
-    ) -> NSMenuItem {
-        let item = NSMenuItem(title: title, action: action, keyEquivalent: keyEquivalent)
-        item.target = self
-        item.keyEquivalentModifierMask = modifiers
-        return item
-    }
-
-    private func makePinActionItem(title: String, action: Selector, id: UUID) -> NSMenuItem {
-        let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
-        item.target = self
-        item.representedObject = id.uuidString
-        return item
-    }
-
-    private func makeToggleItem(title: String, isOn: Bool, action: Selector) -> NSMenuItem {
-        let item = makeActionItem(title: title, action: action)
-        item.state = isOn ? .on : .off
-        return item
-    }
-
-    private func makeDisabledItem(title: String) -> NSMenuItem {
-        let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
-        item.isEnabled = false
-        return item
-    }
-
-    private func makeErrorItem(message: String) -> NSMenuItem {
-        let item = makeDisabledItem(title: message)
-        item.attributedTitle = NSAttributedString(
-            string: message,
-            attributes: [
-                .foregroundColor: NSColor.systemRed,
-            ]
-        )
-        return item
-    }
-
-    private func uuid(for sender: NSMenuItem) -> UUID? {
-        guard let stringValue = sender.representedObject as? String else {
-            return nil
-        }
-
-        return UUID(uuidString: stringValue)
-    }
-
-    @objc
-    private func openManager() {
-        coordinator?.showManagerWindow()
-    }
-
-    @objc
-    private func createNotePin() {
-        coordinator?.createNotePin()
-    }
-
-    @objc
-    private func importImage() {
-        coordinator?.presentImageImporter()
-    }
-
-    @objc
-    private func toggleLaunchAtLogin() {
-        guard let launchAtLoginController else {
-            return
-        }
-
-        launchAtLoginController.setEnabled(!launchAtLoginController.isEnabled)
-    }
-
-    @objc
-    private func openLoginItemsSettings() {
-        launchAtLoginController?.openSystemSettings()
-    }
-
-    @objc
-    private func bringAllPinsForward() {
-        coordinator?.bringAllPinsToFront()
-    }
-
-    @objc
-    private func quitApp() {
-        NSApplication.shared.terminate(nil)
-    }
-
-    @objc
-    private func showPin(_ sender: NSMenuItem) {
-        guard let id = uuid(for: sender) else {
-            return
-        }
-
-        coordinator?.bringToFront(id: id)
-    }
-
-    @objc
-    private func duplicatePin(_ sender: NSMenuItem) {
-        guard let id = uuid(for: sender) else {
-            return
-        }
-
-        coordinator?.duplicatePin(id: id)
-    }
-
-    @objc
-    private func toggleLock(_ sender: NSMenuItem) {
-        guard
-            let id = uuid(for: sender),
-            let item = coordinator?.pins.first(where: { $0.id == id })
-        else {
-            return
-        }
-
-        item.setLocked(!item.record.locked)
-    }
-
-    @objc
-    private func toggleClickThrough(_ sender: NSMenuItem) {
-        guard
-            let id = uuid(for: sender),
-            let item = coordinator?.pins.first(where: { $0.id == id })
-        else {
-            return
-        }
-
-        item.setClickThrough(!item.record.clickThrough)
-    }
-
-    @objc
-    private func setNoteColor(_ sender: NSMenuItem) {
-        guard
-            let payload = sender.representedObject as? String,
-            let separatorIndex = payload.firstIndex(of: "|")
-        else {
-            return
-        }
-
-        let id = UUID(uuidString: String(payload[..<separatorIndex]))
-        let preset = NoteColorPreset(rawValue: String(payload[payload.index(after: separatorIndex)...]))
-
-        guard
-            let id,
-            let preset,
-            let item = coordinator?.pins.first(where: { $0.id == id })
-        else {
-            return
-        }
-
-        item.setNoteColorPreset(preset)
-    }
-
-    @objc
-    private func deletePin(_ sender: NSMenuItem) {
-        guard let id = uuid(for: sender) else {
-            return
-        }
-
-        coordinator?.deletePin(id: id)
     }
 }
 

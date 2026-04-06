@@ -13,7 +13,10 @@ final class LaunchAtLoginController: ObservableObject {
     private let service: SMAppService
     private let userDefaults: UserDefaults
 
-    init(service: SMAppService = .mainApp, userDefaults: UserDefaults = .standard) {
+    init(
+        service: SMAppService = .loginItem(identifier: MenuBarBridge.helperBundleIdentifier()),
+        userDefaults: UserDefaults = .standard
+    ) {
         self.service = service
         self.userDefaults = userDefaults
         status = service.status

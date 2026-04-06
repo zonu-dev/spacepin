@@ -73,6 +73,26 @@ scripts/build_release_dmg.sh
 
 The direct-download DMG is then available at `.derived/SpacePin.dmg`.
 
+To notarize the direct-download app and DMG:
+
+```bash
+xcrun notarytool store-credentials spacepin-notary \
+  --apple-id 'you@example.com' \
+  --team-id 'TEAMID1234' \
+  --password '<app-specific-password>'
+
+SPACEPIN_NOTARY_KEYCHAIN_PROFILE=spacepin-notary \
+scripts/notarize_release_dmg.sh
+```
+
+To upload the notarized DMG over an existing GitHub release asset in one step:
+
+```bash
+SPACEPIN_NOTARY_KEYCHAIN_PROFILE=spacepin-notary \
+SPACEPIN_GITHUB_RELEASE_TAG=v1.0.3 \
+scripts/notarize_release_dmg.sh
+```
+
 From Xcode:
 
 1. Open `SpacePin.xcodeproj` (or run `xed SpacePin.xcodeproj`).
