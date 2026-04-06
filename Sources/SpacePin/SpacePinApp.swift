@@ -81,13 +81,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func restoreStatusItemVisibilityIfNeeded() {
-        let defaults = UserDefaults.standard
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier as CFString? else {
+            return
+        }
 
         for key in StatusItemPreference.visibilityKeys {
-            if let isVisible = defaults.object(forKey: key) as? Bool, isVisible == false {
-                defaults.removeObject(forKey: key)
+            let keyName = key as CFString
+            if let isVisible = CFPreferencesCopyAppValue(keyName, bundleIdentifier) as? Bool, isVisible == false {
+                CFPreferencesSetAppValue(keyName, nil, bundleIdentifier)
             }
         }
+
+        CFPreferencesAppSynchronize(bundleIdentifier)
     }
 
     private func installStatusItemIfNeeded() {
@@ -98,6 +103,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let title = L10n.text("app.name", fallback: "SpacePin")
         let image = NSImage(systemSymbolName: "pin.circle.fill", accessibilityDescription: title)
         let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem.autosaveName = nil
         statusItem.autosaveName = StatusItemPreference.autosaveName
         if let button = statusItem.button {
             if let image {
