@@ -12,5 +12,6 @@ DerivedData/
 *.p12
 *.cer
 *.mobileprovision
+*.p8
 .env
 .env.*

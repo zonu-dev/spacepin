@@ -24,21 +24,23 @@ if [[ ! -d "$ROOT_DIR/SpacePin.xcodeproj" ]]; then
   ruby scripts/generate_xcodeproj.rb
 fi
 
-xcodebuild \
-  -project SpacePin.xcodeproj \
-  -scheme SpacePin \
-  -derivedDataPath "$DERIVED_DATA_PATH" \
-  -destination 'generic/platform=macOS' \
-  -archivePath "$ARCHIVE_PATH" \
-  CODE_SIGNING_ALLOWED=YES \
-  archive
+if [[ "${SPACEPIN_SKIP_DIRECT_EXPORT:-0}" != "1" ]]; then
+  xcodebuild \
+    -project SpacePin.xcodeproj \
+    -scheme SpacePin \
+    -derivedDataPath "$DERIVED_DATA_PATH" \
+    -destination 'generic/platform=macOS' \
+    -archivePath "$ARCHIVE_PATH" \
+    CODE_SIGNING_ALLOWED=YES \
+    archive
 
-rm -rf "$EXPORT_PATH"
-xcodebuild \
-  -exportArchive \
-  -archivePath "$ARCHIVE_PATH" \
-  -exportPath "$EXPORT_PATH" \
-  -exportOptionsPlist "$EXPORT_OPTIONS_PLIST"
+  rm -rf "$EXPORT_PATH"
+  xcodebuild \
+    -exportArchive \
+    -archivePath "$ARCHIVE_PATH" \
+    -exportPath "$EXPORT_PATH" \
+    -exportOptionsPlist "$EXPORT_OPTIONS_PLIST"
+fi
 
 APP_PATH="$EXPORT_PATH/SpacePin.app"
 if [[ ! -d "$APP_PATH" ]]; then
