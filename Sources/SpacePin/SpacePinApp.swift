@@ -30,6 +30,16 @@ struct SpacePinApp: App {
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+    private enum StatusItemPreference {
+        static let autosaveName = "SpacePinStatusItem"
+        static let visibilityKeys = [
+            "NSStatusItem VisibleCC Item-0",
+            "NSStatusItem Visible Item-0",
+            "NSStatusItem VisibleCC \(autosaveName)",
+            "NSStatusItem Visible \(autosaveName)",
+        ]
+    }
+
     static var pendingCoordinator: AppCoordinator?
     static var pendingLaunchAtLoginController: LaunchAtLoginController?
 
@@ -63,10 +73,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         self.coordinator = coordinator
         self.launchAtLoginController = launchAtLoginController
+        restoreStatusItemVisibilityIfNeeded()
         installStatusItemIfNeeded()
         observeCoordinator()
         rebuildMenu()
         scheduleLaunchAtLoginPromptIfNeeded()
+    }
+
+    private func restoreStatusItemVisibilityIfNeeded() {
+        let defaults = UserDefaults.standard
+
+        for key in StatusItemPreference.visibilityKeys {
+            if let isVisible = defaults.object(forKey: key) as? Bool, isVisible == false {
+                defaults.removeObject(forKey: key)
+            }
+        }
     }
 
     private func installStatusItemIfNeeded() {
@@ -77,6 +98,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let title = L10n.text("app.name", fallback: "SpacePin")
         let image = NSImage(systemSymbolName: "pin.circle.fill", accessibilityDescription: title)
         let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem.autosaveName = StatusItemPreference.autosaveName
         if let button = statusItem.button {
             if let image {
                 image.isTemplate = true
