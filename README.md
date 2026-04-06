@@ -89,7 +89,7 @@ To upload the notarized DMG over an existing GitHub release asset in one step:
 
 ```bash
 SPACEPIN_NOTARY_KEYCHAIN_PROFILE=spacepin-notary \
-SPACEPIN_GITHUB_RELEASE_TAG=v1.0.2 \
+SPACEPIN_GITHUB_RELEASE_TAG=v1.0.3 \
 scripts/notarize_release_dmg.sh
 ```
 
