@@ -53,6 +53,12 @@ xcodebuild \
 
 The unsigned app bundle is then available at `.derived/Build/Products/Debug/SpacePin.app`.
 
+To rebuild the debug app and relaunch it in one step:
+
+```bash
+bash scripts/dev_rebuild_and_open.sh
+```
+
 To archive for App Store distribution:
 
 ```bash

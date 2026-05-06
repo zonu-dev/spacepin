@@ -49,6 +49,11 @@ final class LaunchAtLoginController: ObservableObject {
         status = service.status
     }
 
+    func applyExternalStatus(_ status: SMAppService.Status, errorMessage: String?) {
+        self.status = status
+        self.errorMessage = errorMessage
+    }
+
     func setPromptSuppressed(_ suppressed: Bool) {
         userDefaults.set(suppressed, forKey: DefaultsKey.suppressPrompt)
     }

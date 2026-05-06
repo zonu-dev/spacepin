@@ -1,9 +1,19 @@
 import AppKit
 import SpacePinCore
 
+extension NSWindow.Level {
+    static let spacePinDragOverlay = NSWindow.Level(
+        rawValue: max(
+            Int(CGWindowLevelForKey(.draggingWindow)),
+            NSWindow.Level.screenSaver.rawValue + 1
+        )
+    )
+}
+
 final class PinPanel: NSPanel {
     static let collapsedHeight: CGFloat = 34
     static let collapsedMinimumWidth: CGFloat = 140
+    static let compactNoteDiameter: CGFloat = 34
 
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { true }
@@ -34,7 +44,7 @@ final class PinPanel: NSPanel {
         alphaValue = record.opacity
         ignoresMouseEvents = record.clickThrough
         contentMinSize = minimumContentSize(for: record.kind, isCollapsed: record.isCollapsed)
-        contentMaxSize = maximumContentSize(isCollapsed: record.isCollapsed)
+        contentMaxSize = maximumContentSize(for: record.kind, isCollapsed: record.isCollapsed)
         applyInteractionState(locked: record.locked, isCollapsed: record.isCollapsed)
     }
 
@@ -51,7 +61,12 @@ final class PinPanel: NSPanel {
 
     private func minimumContentSize(for kind: PinKind, isCollapsed: Bool) -> NSSize {
         if isCollapsed {
-            return NSSize(width: Self.collapsedMinimumWidth, height: Self.collapsedHeight)
+            switch kind {
+            case .note:
+                return NSSize(width: Self.compactNoteDiameter, height: Self.compactNoteDiameter)
+            case .image:
+                return NSSize(width: Self.compactNoteDiameter, height: Self.compactNoteDiameter)
+            }
         }
 
         switch kind {
@@ -62,9 +77,14 @@ final class PinPanel: NSPanel {
         }
     }
 
-    private func maximumContentSize(isCollapsed: Bool) -> NSSize {
+    private func maximumContentSize(for kind: PinKind, isCollapsed: Bool) -> NSSize {
         if isCollapsed {
-            return NSSize(width: CGFloat.greatestFiniteMagnitude, height: Self.collapsedHeight)
+            switch kind {
+            case .note:
+                return NSSize(width: Self.compactNoteDiameter, height: Self.compactNoteDiameter)
+            case .image:
+                return NSSize(width: Self.compactNoteDiameter, height: Self.compactNoteDiameter)
+            }
         }
 
         return NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)

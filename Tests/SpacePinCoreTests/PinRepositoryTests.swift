@@ -71,20 +71,24 @@ final class PinRepositoryTests: XCTestCase {
         XCTAssertEqual(loaded.first?.noteColorPreset, .sunflower)
         XCTAssertEqual(loaded.first?.noteFontSize, 15)
         XCTAssertEqual(loaded.first?.isCollapsed, false)
+        XCTAssertEqual(loaded.first?.isDocked, false)
+        XCTAssertNil(loaded.first?.dockOrder)
+        XCTAssertEqual(loaded.first?.expandedWidth, 320)
         XCTAssertEqual(loaded.first?.displayTitle, "legacy")
     }
 
-    func testCollapsedPinRoundTripsExpandedHeight() throws {
+    func testCollapsedPinRoundTripsExpandedSize() throws {
         let rootDirectory = try makeTemporaryDirectory()
         defer { try? FileManager.default.removeItem(at: rootDirectory) }
 
         let repository = PinRepository(rootDirectory: rootDirectory)
         var record = PinRecord.makeNote(
-            frame: CGRect(x: 20, y: 40, width: 320, height: 34),
+            frame: CGRect(x: 20, y: 40, width: 40, height: 40),
             noteText: "remember size",
             noteColorPreset: .sky
         )
         record.isCollapsed = true
+        record.expandedWidth = 320
         record.expandedHeight = 260
 
         try repository.save([record])
@@ -92,6 +96,7 @@ final class PinRepositoryTests: XCTestCase {
         let loaded = try repository.load()
 
         XCTAssertEqual(loaded.first?.isCollapsed, true)
+        XCTAssertEqual(loaded.first?.expandedWidth, 320)
         XCTAssertEqual(loaded.first?.expandedHeight, 260)
     }
 
@@ -133,6 +138,26 @@ final class PinRepositoryTests: XCTestCase {
         XCTAssertEqual(loaded.first?.noteFontSize, 24)
     }
 
+    func testImageFrameColorRoundTrips() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        var record = PinRecord.makeImage(
+            frame: CGRect(x: 20, y: 40, width: 320, height: 200),
+            imageAssetFilename: "sheet.png",
+            sourceDisplayName: "sheet.png"
+        )
+        record.imageFrameColorPreset = .sky
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.imageFrameColorPreset, .sky)
+        XCTAssertEqual(loaded.first?.frameColorPreset, .sky)
+    }
+
     func testBlankRawTitleRoundTripsWithoutFreezingFallbackTitle() throws {
         let rootDirectory = try makeTemporaryDirectory()
         defer { try? FileManager.default.removeItem(at: rootDirectory) }
@@ -150,5 +175,90 @@ final class PinRepositoryTests: XCTestCase {
 
         XCTAssertEqual(loaded.first?.title, "")
         XCTAssertEqual(loaded.first?.displayTitle, "Untitled")
+    }
+
+    func testHeaderIconRoundTrips() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        var record = PinRecord.makeNote(
+            frame: CGRect(x: 20, y: 40, width: 320, height: 240),
+            noteText: "Icon"
+        )
+        record.iconSymbolName = "lightbulb"
+        record.headerIconMode = .titleInitial
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.iconSymbolName, "lightbulb")
+        XCTAssertEqual(loaded.first?.headerIconSymbolName, "lightbulb")
+        XCTAssertEqual(loaded.first?.headerIconMode, .titleInitial)
+    }
+
+    func testInventoryOrderRoundTrips() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        var record = PinRecord.makeNote(
+            frame: CGRect(x: 20, y: 40, width: 320, height: 240),
+            noteText: "Inventory"
+        )
+        record.inventoryOrder = 17
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.inventoryOrder, 17)
+    }
+
+    func testDockStateRoundTrips() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        var record = PinRecord.makeNote(
+            frame: CGRect(x: 20, y: 40, width: 34, height: 34),
+            noteText: "Docked"
+        )
+        record.isCollapsed = true
+        record.isDocked = true
+        record.dockOrder = 1
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.isDocked, true)
+        XCTAssertEqual(loaded.first?.dockOrder, 1)
+        XCTAssertEqual(loaded.first?.isCollapsed, true)
+    }
+
+    func testImageDockStateRoundTrips() throws {
+        let rootDirectory = try makeTemporaryDirectory()
+        defer { try? FileManager.default.removeItem(at: rootDirectory) }
+
+        let repository = PinRepository(rootDirectory: rootDirectory)
+        var record = PinRecord.makeImage(
+            frame: CGRect(x: 20, y: 40, width: 34, height: 34),
+            imageAssetFilename: "dock.png",
+            sourceDisplayName: "dock.png"
+        )
+        record.isCollapsed = true
+        record.isDocked = true
+        record.dockOrder = 2
+
+        try repository.save([record])
+
+        let loaded = try repository.load()
+
+        XCTAssertEqual(loaded.first?.kind, .image)
+        XCTAssertEqual(loaded.first?.isDocked, true)
+        XCTAssertEqual(loaded.first?.dockOrder, 2)
+        XCTAssertEqual(loaded.first?.isCollapsed, true)
     }
 }

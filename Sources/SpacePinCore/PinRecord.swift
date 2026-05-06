@@ -6,6 +6,11 @@ public enum PinKind: String, Codable, CaseIterable, Sendable {
     case image
 }
 
+public enum PinHeaderIconMode: String, Codable, CaseIterable, Sendable {
+    case symbol
+    case titleInitial
+}
+
 public enum NoteColorPreset: String, Codable, CaseIterable, Sendable {
     case sunflower
     case mint
@@ -13,6 +18,12 @@ public enum NoteColorPreset: String, Codable, CaseIterable, Sendable {
     case coral
     case lavender
     case graphite
+    case rose
+    case peach
+    case sage
+    case teal
+    case indigo
+    case espresso
 
     public var displayName: String {
         switch self {
@@ -28,6 +39,18 @@ public enum NoteColorPreset: String, Codable, CaseIterable, Sendable {
             return "Lavender"
         case .graphite:
             return "Graphite"
+        case .rose:
+            return "Rose"
+        case .peach:
+            return "Peach"
+        case .sage:
+            return "Sage"
+        case .teal:
+            return "Teal"
+        case .indigo:
+            return "Indigo"
+        case .espresso:
+            return "Espresso"
         }
     }
 }
@@ -73,7 +96,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
     public var noteText: String
     public var noteFontSize: Double
     public var noteColorPreset: NoteColorPreset
+    public var headerIconMode: PinHeaderIconMode
+    public var iconSymbolName: String?
+    public var inventoryOrder: Int?
+    public var isDocked: Bool
+    public var dockOrder: Int?
+    public var imageFrameColorPreset: NoteColorPreset?
     public var isCollapsed: Bool
+    public var expandedWidth: Double?
     public var expandedHeight: Double?
     public var imageAssetFilename: String?
     public var sourceDisplayName: String?
@@ -91,7 +121,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         noteText: String,
         noteFontSize: Double,
         noteColorPreset: NoteColorPreset,
+        headerIconMode: PinHeaderIconMode,
+        iconSymbolName: String?,
+        inventoryOrder: Int?,
+        isDocked: Bool,
+        dockOrder: Int?,
+        imageFrameColorPreset: NoteColorPreset?,
         isCollapsed: Bool,
+        expandedWidth: Double?,
         expandedHeight: Double?,
         imageAssetFilename: String?,
         sourceDisplayName: String?,
@@ -108,7 +145,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         self.noteText = noteText
         self.noteFontSize = noteFontSize
         self.noteColorPreset = noteColorPreset
+        self.headerIconMode = headerIconMode
+        self.iconSymbolName = iconSymbolName
+        self.inventoryOrder = inventoryOrder
+        self.isDocked = isDocked
+        self.dockOrder = dockOrder
+        self.imageFrameColorPreset = imageFrameColorPreset
         self.isCollapsed = isCollapsed
+        self.expandedWidth = expandedWidth
         self.expandedHeight = expandedHeight
         self.imageAssetFilename = imageAssetFilename
         self.sourceDisplayName = sourceDisplayName
@@ -137,7 +181,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
             noteText: noteText,
             noteFontSize: noteFontSize,
             noteColorPreset: noteColorPreset,
+            headerIconMode: .titleInitial,
+            iconSymbolName: nil,
+            inventoryOrder: nil,
+            isDocked: false,
+            dockOrder: nil,
+            imageFrameColorPreset: nil,
             isCollapsed: false,
+            expandedWidth: frame.width,
             expandedHeight: frame.height,
             imageAssetFilename: nil,
             sourceDisplayName: nil,
@@ -167,7 +218,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
             noteText: "",
             noteFontSize: PinRecord.defaultNoteFontSize,
             noteColorPreset: .sunflower,
+            headerIconMode: .titleInitial,
+            iconSymbolName: nil,
+            inventoryOrder: nil,
+            isDocked: false,
+            dockOrder: nil,
+            imageFrameColorPreset: nil,
             isCollapsed: false,
+            expandedWidth: frame.width,
             expandedHeight: frame.height,
             imageAssetFilename: imageAssetFilename,
             sourceDisplayName: sourceDisplayName,
@@ -215,7 +273,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
             noteText: noteText,
             noteFontSize: noteFontSize,
             noteColorPreset: noteColorPreset,
+            headerIconMode: headerIconMode,
+            iconSymbolName: iconSymbolName,
+            inventoryOrder: nil,
+            isDocked: false,
+            dockOrder: nil,
+            imageFrameColorPreset: imageFrameColorPreset,
             isCollapsed: false,
+            expandedWidth: expandedWidth ?? frame.width,
             expandedHeight: expandedHeight ?? frame.height,
             imageAssetFilename: imageAssetFilename,
             sourceDisplayName: sourceDisplayName,
@@ -235,7 +300,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         case noteText
         case noteFontSize
         case noteColorPreset
+        case headerIconMode
+        case iconSymbolName
+        case inventoryOrder
+        case isDocked
+        case dockOrder
+        case imageFrameColorPreset
         case isCollapsed
+        case expandedWidth
         case expandedHeight
         case imageAssetFilename
         case sourceDisplayName
@@ -257,7 +329,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         locked = try container.decode(Bool.self, forKey: .locked)
         noteFontSize = try container.decodeIfPresent(Double.self, forKey: .noteFontSize) ?? Self.defaultNoteFontSize
         noteColorPreset = try container.decodeIfPresent(NoteColorPreset.self, forKey: .noteColorPreset) ?? .sunflower
+        headerIconMode = try container.decodeIfPresent(PinHeaderIconMode.self, forKey: .headerIconMode) ?? .symbol
+        iconSymbolName = try container.decodeIfPresent(String.self, forKey: .iconSymbolName)
+        inventoryOrder = try container.decodeIfPresent(Int.self, forKey: .inventoryOrder)
+        isDocked = try container.decodeIfPresent(Bool.self, forKey: .isDocked) ?? false
+        dockOrder = try container.decodeIfPresent(Int.self, forKey: .dockOrder)
+        imageFrameColorPreset = try container.decodeIfPresent(NoteColorPreset.self, forKey: .imageFrameColorPreset)
         isCollapsed = try container.decodeIfPresent(Bool.self, forKey: .isCollapsed) ?? false
+        expandedWidth = try container.decodeIfPresent(Double.self, forKey: .expandedWidth) ?? frame.width
         expandedHeight = try container.decodeIfPresent(Double.self, forKey: .expandedHeight)
         imageAssetFilename = try container.decodeIfPresent(String.self, forKey: .imageAssetFilename)
         createdAt = try container.decode(Date.self, forKey: .createdAt)
@@ -276,7 +355,14 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         try container.encode(noteText, forKey: .noteText)
         try container.encode(noteFontSize, forKey: .noteFontSize)
         try container.encode(noteColorPreset, forKey: .noteColorPreset)
+        try container.encode(headerIconMode, forKey: .headerIconMode)
+        try container.encodeIfPresent(iconSymbolName, forKey: .iconSymbolName)
+        try container.encodeIfPresent(inventoryOrder, forKey: .inventoryOrder)
+        try container.encode(isDocked, forKey: .isDocked)
+        try container.encodeIfPresent(dockOrder, forKey: .dockOrder)
+        try container.encodeIfPresent(imageFrameColorPreset, forKey: .imageFrameColorPreset)
         try container.encode(isCollapsed, forKey: .isCollapsed)
+        try container.encodeIfPresent(expandedWidth, forKey: .expandedWidth)
         try container.encodeIfPresent(expandedHeight, forKey: .expandedHeight)
         try container.encodeIfPresent(imageAssetFilename, forKey: .imageAssetFilename)
         try container.encodeIfPresent(sourceDisplayName, forKey: .sourceDisplayName)
@@ -309,6 +395,39 @@ public struct PinRecord: Codable, Equatable, Identifiable, Sendable {
         case .image:
             return normalizedTitle(sourceDisplayName, fallback: "Image Pin")
         }
+    }
+}
+
+public extension PinRecord {
+    static func defaultHeaderIconSymbolName(for kind: PinKind) -> String {
+        switch kind {
+        case .note:
+            return "note.text"
+        case .image:
+            return "photo"
+        }
+    }
+
+    var headerIconSymbolName: String {
+        let trimmedSymbolName = iconSymbolName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return trimmedSymbolName.isEmpty ? Self.defaultHeaderIconSymbolName(for: kind) : trimmedSymbolName
+    }
+
+    var frameColorPreset: NoteColorPreset {
+        switch kind {
+        case .note:
+            return noteColorPreset
+        case .image:
+            return imageFrameColorPreset ?? .graphite
+        }
+    }
+
+    var isDockedPin: Bool {
+        isDocked
+    }
+
+    var isDockedNote: Bool {
+        kind == .note && isDocked
     }
 }
 

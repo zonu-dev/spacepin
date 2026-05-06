@@ -29,13 +29,20 @@ final class PinItem: ObservableObject, Identifiable {
     func updateFrameFromWindow(_ frame: CGRect) {
         let integralFrame = PinFrame(frame.integral)
 
-        guard integralFrame != record.frame || (!record.isCollapsed && record.expandedHeight != integralFrame.height) else {
+        guard
+            integralFrame != record.frame ||
+            (!record.isCollapsed && (
+                record.expandedWidth != integralFrame.width ||
+                record.expandedHeight != integralFrame.height
+            ))
+        else {
             return
         }
 
         mutate { record in
             record.frame = integralFrame
             if !record.isCollapsed {
+                record.expandedWidth = integralFrame.width
                 record.expandedHeight = integralFrame.height
             }
         }
@@ -83,13 +90,54 @@ final class PinItem: ObservableObject, Identifiable {
         }
     }
 
-    func setNoteColorPreset(_ preset: NoteColorPreset) {
-        guard record.noteColorPreset != preset else {
+    func setFrameColorPreset(_ preset: NoteColorPreset) {
+        switch record.kind {
+        case .note:
+            guard record.noteColorPreset != preset else {
+                return
+            }
+
+            mutate { record in
+                record.noteColorPreset = preset
+            }
+        case .image:
+            guard record.imageFrameColorPreset != preset else {
+                return
+            }
+
+            mutate { record in
+                record.imageFrameColorPreset = preset
+            }
+        }
+    }
+
+    func setHeaderIconSymbolName(_ symbolName: String?) {
+        let normalizedSymbolName = symbolName?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let nextSymbolName: String?
+        if let normalizedSymbolName, !normalizedSymbolName.isEmpty {
+            let defaultSymbolName = PinRecord.defaultHeaderIconSymbolName(for: record.kind)
+            nextSymbolName = normalizedSymbolName == defaultSymbolName ? nil : normalizedSymbolName
+        } else {
+            nextSymbolName = nil
+        }
+
+        guard record.iconSymbolName != nextSymbolName || record.headerIconMode != .symbol else {
             return
         }
 
         mutate { record in
-            record.noteColorPreset = preset
+            record.headerIconMode = .symbol
+            record.iconSymbolName = nextSymbolName
+        }
+    }
+
+    func setHeaderIconToTitleInitial() {
+        guard record.headerIconMode != .titleInitial else {
+            return
+        }
+
+        mutate { record in
+            record.headerIconMode = .titleInitial
         }
     }
 
@@ -105,13 +153,15 @@ final class PinItem: ObservableObject, Identifiable {
         }
     }
 
-    func applyCollapsedState(_ collapsed: Bool, frame: CGRect, expandedHeight: CGFloat?) {
+    func applyCollapsedState(_ collapsed: Bool, frame: CGRect, expandedSize: CGSize?) {
         let integralFrame = PinFrame(frame.integral)
-        let normalizedExpandedHeight = expandedHeight.map { Double($0) }
+        let normalizedExpandedWidth = expandedSize.map { Double($0.width) }
+        let normalizedExpandedHeight = expandedSize.map { Double($0.height) }
 
         guard
             record.isCollapsed != collapsed ||
             record.frame != integralFrame ||
+            record.expandedWidth != normalizedExpandedWidth ||
             record.expandedHeight != normalizedExpandedHeight
         else {
             return
@@ -120,9 +170,33 @@ final class PinItem: ObservableObject, Identifiable {
         mutate { record in
             record.isCollapsed = collapsed
             record.frame = integralFrame
+            if let normalizedExpandedWidth {
+                record.expandedWidth = normalizedExpandedWidth
+            }
             if let normalizedExpandedHeight {
                 record.expandedHeight = normalizedExpandedHeight
             }
+        }
+    }
+
+    func setDockState(isDocked: Bool, order: Int?) {
+        guard record.isDocked != isDocked || record.dockOrder != order else {
+            return
+        }
+
+        mutate { record in
+            record.isDocked = isDocked
+            record.dockOrder = order
+        }
+    }
+
+    func setInventoryOrder(_ order: Int?) {
+        guard record.inventoryOrder != order else {
+            return
+        }
+
+        mutate { record in
+            record.inventoryOrder = order
         }
     }
 

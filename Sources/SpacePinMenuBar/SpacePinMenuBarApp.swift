@@ -17,19 +17,55 @@ struct SpacePinMenuBarApp: App {
 final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem?
     private let launchAtLoginController = LaunchAtLoginController()
+    private var launchAtLoginObservers: [NSObjectProtocol] = []
+    private var quickPaletteShortcutObserver: NSObjectProtocol?
+    private var quickPaletteShortcut = QuickPaletteShortcut.default
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        guard !terminateIfAnotherHelperIsRunning() else {
+            return
+        }
+
         installStatusItemIfNeeded()
+        observeLaunchAtLoginStatus()
+        observeQuickPaletteShortcut()
         ensureHostAppRunning()
+        requestQuickPaletteShortcutSync()
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        launchAtLoginObservers.forEach {
+            DistributedNotificationCenter.default().removeObserver($0)
+        }
+        if let quickPaletteShortcutObserver {
+            DistributedNotificationCenter.default().removeObserver(quickPaletteShortcutObserver)
+        }
     }
 
     func menuWillOpen(_ menu: NSMenu) {
         launchAtLoginController.refreshStatus()
         rebuildMenu()
+    }
+
+    private func terminateIfAnotherHelperIsRunning() -> Bool {
+        let hostURL = MenuBarBridge.hostAppURL()
+        guard !MenuBarBridge.hasOtherSpacePinHostApplication(allowedHostURL: hostURL) else {
+            NSApp.terminate(nil)
+            return true
+        }
+
+        MenuBarBridge.terminateOtherSpacePinApplications(
+            allowedBundleURLs: [
+                Bundle.main.bundleURL,
+                hostURL
+            ]
+        )
+
+        return false
     }
 
     private func installStatusItemIfNeeded() {
@@ -64,6 +100,15 @@ final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate 
 
         menu.removeAllItems()
 
+        let quickPaletteItem = makeActionItem(
+            title: L10n.text("action.show_quick_palette", fallback: "Show Quick Palette"),
+            action: #selector(showQuickPalette)
+        )
+        quickPaletteItem.keyEquivalent = quickPaletteShortcut.menuKeyEquivalent
+        quickPaletteItem.keyEquivalentModifierMask = quickPaletteShortcut.menuModifierMask
+        menu.addItem(quickPaletteItem)
+        menu.addItem(.separator())
+
         menu.addItem(makeActionItem(
             title: L10n.text("action.open_manager", fallback: "Open Manager"),
             action: #selector(openManager)
@@ -86,6 +131,12 @@ final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate 
             isOn: launchAtLoginController.isEnabled,
             action: #selector(toggleLaunchAtLogin)
         ))
+        let settingsItem = makeActionItem(
+            title: L10n.text("action.open_settings", fallback: "Settings…"),
+            action: #selector(openSettingsFromStatusMenu)
+        )
+        settingsItem.image = nil
+        menu.addItem(settingsItem)
 
         if launchAtLoginController.requiresApproval {
             menu.addItem(makeDisabledItem(title: L10n.text(
@@ -147,6 +198,48 @@ final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate 
         )
     }
 
+    private func observeLaunchAtLoginStatus() {
+        launchAtLoginObservers = MenuBarBridge.launchAtLoginStatusNotifications.map { notificationName in
+            DistributedNotificationCenter.default().addObserver(
+                forName: notificationName,
+                object: nil,
+                queue: .main
+            ) { [weak self] notification in
+                guard let self,
+                      let update = MenuBarBridge.launchAtLoginStatus(from: notification) else {
+                    return
+                }
+
+                Task { @MainActor in
+                    self.launchAtLoginController.applyExternalStatus(update.status, errorMessage: update.errorMessage)
+                    self.rebuildMenu()
+                }
+            }
+        }
+    }
+
+    private func observeQuickPaletteShortcut() {
+        quickPaletteShortcutObserver = DistributedNotificationCenter.default().addObserver(
+            forName: MenuBarBridge.quickPaletteShortcutNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let self,
+                  let shortcut = MenuBarBridge.quickPaletteShortcut(from: notification) else {
+                return
+            }
+
+            Task { @MainActor in
+                self.quickPaletteShortcut = shortcut
+                self.rebuildMenu()
+            }
+        }
+    }
+
+    private func requestQuickPaletteShortcutSync() {
+        dispatch(.syncQuickPaletteShortcut)
+    }
+
     private func dispatch(_ command: MenuBarCommand) {
         let hostBundleIdentifier = MenuBarBridge.hostBundleIdentifier()
         let hostWasRunning = MenuBarBridge.isRunning(bundleIdentifier: hostBundleIdentifier)
@@ -154,13 +247,23 @@ final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate 
 
         let delay: DispatchTimeInterval = hostWasRunning ? .milliseconds(0) : .milliseconds(600)
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            MenuBarBridge.post(command: command)
+            MenuBarBridge.open(command: command)
         }
+    }
+
+    @objc
+    private func showQuickPalette() {
+        dispatch(.showQuickPalette)
     }
 
     @objc
     private func openManager() {
         dispatch(.openManager)
+    }
+
+    @objc
+    private func openSettingsFromStatusMenu() {
+        dispatch(.openSettings)
     }
 
     @objc
@@ -180,8 +283,7 @@ final class MenuBarAppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate 
 
     @objc
     private func toggleLaunchAtLogin() {
-        launchAtLoginController.setEnabled(!launchAtLoginController.isEnabled)
-        rebuildMenu()
+        dispatch(launchAtLoginController.isEnabled ? .disableLaunchAtLogin : .enableLaunchAtLogin)
     }
 
     @objc

@@ -142,15 +142,7 @@ private struct PinListRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
-                Image(systemName: item.record.kind == .note ? "note.text" : "photo")
-                    .font(.system(size: 16, weight: .semibold))
-                    .frame(width: 28, height: 28)
-                    .background(
-                        item.record.kind == .note
-                            ? item.record.noteColorPreset.swiftUIColor.opacity(0.22)
-                            : Color.accentColor.opacity(0.12)
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                HeaderIconPreview(item: item)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.displayTitle)
@@ -195,34 +187,34 @@ private struct PinListRow: View {
                 .toggleStyle(.switch)
             }
 
-            if item.record.kind == .note {
-                HStack(spacing: 12) {
-                    Text(L10n.text("label.color", fallback: "Color"))
-                        .foregroundStyle(.secondary)
+            HStack(spacing: 12) {
+                Text(L10n.text("label.color", fallback: "Color"))
+                    .foregroundStyle(.secondary)
 
-                    Picker(
-                        L10n.text("label.color", fallback: "Color"),
-                        selection: Binding(get: {
-                            item.record.noteColorPreset
-                        }, set: { newValue in
-                            item.setNoteColorPreset(newValue)
-                        })
-                    ) {
-                        ForEach(NoteColorPreset.allCases, id: \.self) { preset in
-                            HStack(spacing: 8) {
-                                Circle()
-                                    .fill(preset.swiftUIColor)
-                                    .frame(width: 10, height: 10)
-                                Text(L10n.noteColorName(preset))
-                            }
-                            .tag(preset)
+                Picker(
+                    L10n.text("label.color", fallback: "Color"),
+                    selection: Binding(get: {
+                        item.record.frameColorPreset
+                    }, set: { newValue in
+                        item.setFrameColorPreset(newValue)
+                    })
+                ) {
+                    ForEach(NoteColorPreset.allCases, id: \.self) { preset in
+                        HStack(spacing: 8) {
+                            Circle()
+                                .fill(preset.swiftUIColor)
+                                .frame(width: 10, height: 10)
+                            Text(L10n.noteColorName(preset))
                         }
+                        .tag(preset)
                     }
-                    .pickerStyle(.menu)
-
-                    Spacer()
                 }
+                .pickerStyle(.menu)
 
+                Spacer()
+            }
+
+            if item.record.kind == .note {
                 HStack(spacing: 12) {
                     Text(L10n.text("label.font", fallback: "Font"))
                         .foregroundStyle(.secondary)
@@ -274,5 +266,25 @@ private struct PinListRow: View {
             .buttonStyle(.borderless)
         }
         .padding(.vertical, 8)
+    }
+}
+
+private struct HeaderIconPreview: View {
+    @ObservedObject var item: PinItem
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(item.record.frameColorPreset.swiftUIColor.opacity(0.22))
+
+            if item.record.headerIconMode == .titleInitial {
+                Text(item.record.localizedHeaderMonogram)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+            } else {
+                Image(systemName: item.record.headerIconSymbolName)
+                    .font(.system(size: 16, weight: .semibold))
+            }
+        }
+        .frame(width: 28, height: 28)
     }
 }

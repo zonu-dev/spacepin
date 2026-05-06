@@ -27,4 +27,10 @@ extension PinRecord {
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmedTitle.isEmpty ? localizedDefaultTitle : trimmedTitle
     }
+
+    var localizedHeaderMonogram: String {
+        let trimmedTitle = localizedDisplayTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        let initial = trimmedTitle.isEmpty ? "•" : String(trimmedTitle.prefix(1))
+        return initial.uppercased(with: L10n.currentLocale)
+    }
 }
