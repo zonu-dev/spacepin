@@ -15,7 +15,14 @@ EXPORT_OPTIONS_PLIST="${SPACEPIN_DIRECT_EXPORT_OPTIONS_PLIST:-$ROOT_DIR/Support/
 VOLUME_NAME="${SPACEPIN_DMG_VOLUME_NAME:-SpacePin Installer}"
 
 STAGE_DIR="$(mktemp -d "${TMPDIR:-/tmp}/spacepin-dmg-stage.XXXXXX")"
+MOUNT_DIR="$(mktemp -d "${TMPDIR:-/tmp}/spacepin-dmg-mount.XXXXXX")"
+RW_DMG_PATH=""
 cleanup() {
+  hdiutil detach "$MOUNT_DIR" -quiet >/dev/null 2>&1 || true
+  rmdir "$MOUNT_DIR" >/dev/null 2>&1 || true
+  if [[ -n "$RW_DMG_PATH" ]]; then
+    rm -f "$RW_DMG_PATH"
+  fi
   rm -rf "$STAGE_DIR"
 }
 trap cleanup EXIT
@@ -51,12 +58,26 @@ fi
 cp -R "$APP_PATH" "$STAGE_DIR/SpacePin.app"
 ln -s /Applications "$STAGE_DIR/Applications"
 
+APP_SIZE_KB="$(du -sk "$APP_PATH" | awk '{print $1}')"
+DMG_SIZE_MB="$((APP_SIZE_KB / 512 + 20))"
+RW_DMG_BASE="$(mktemp "${TMPDIR:-/tmp}/spacepin-release.XXXXXX")"
+rm -f "$RW_DMG_BASE"
+RW_DMG_PATH="${RW_DMG_BASE}.dmg"
 rm -f "$DMG_PATH"
+rm -f "$RW_DMG_PATH"
 hdiutil create \
+  -size "${DMG_SIZE_MB}m" \
+  -fs HFS+ \
   -volname "$VOLUME_NAME" \
-  -srcfolder "$STAGE_DIR" \
-  -ov \
-  -format UDZO \
-  "$DMG_PATH"
+  "$RW_DMG_PATH"
+
+hdiutil attach "$RW_DMG_PATH" -mountpoint "$MOUNT_DIR" -nobrowse -quiet
+ditto --norsrc --noextattr "$STAGE_DIR/SpacePin.app" "$MOUNT_DIR/SpacePin.app"
+ln -s /Applications "$MOUNT_DIR/Applications"
+sync
+hdiutil detach "$MOUNT_DIR" -quiet
+
+hdiutil convert "$RW_DMG_PATH" -format UDZO -o "$DMG_PATH"
+rm -f "$RW_DMG_PATH"
 
 echo "Created DMG at $DMG_PATH"

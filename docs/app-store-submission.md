@@ -85,7 +85,8 @@ Then fill in:
 
 ## Screenshots
 
-Use the prepared macOS screenshots in this order:
+Use the prepared macOS screenshots in this order. Japanese screenshots are in
+`docs/screenshots/`; English screenshots are in `docs/screenshots/en/`.
 
 1. `docs/screenshots/spacepin-1.png` — Quick palette entry point
 2. `docs/screenshots/spacepin-2.png` — Text and image memos near the workspace

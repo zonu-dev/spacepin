@@ -1,18 +1,20 @@
 {
   "en": {
     "subtitle": "Memo palette for your Mac",
-    "keywords": "memo,notes,image,sticky,floating,desktop,spaces,overlay,palette,reference",
+    "keywords": "memo,notes,sticky,image,floating,desktop,spaces,palette,reference,productivity",
     "shortDescription": "Open a quick palette to keep text and image memos close across macOS Spaces.",
-    "fullDescription": "SpacePin is a lightweight menu bar app for keeping text and image memos close while you work.\n\nOpen the quick palette with Shift + Command + Space, create text or image memos, and bring stored memos back to the front from a 10x4 inventory-style palette. Memos open as compact floating panels that you can move, resize, collapse into the palette, and restore after relaunch.\n\nUse SpacePin to keep checklists, image references, and temporary notes visible beside your current app. SpacePin uses native macOS windows and stores memo content locally on your Mac.",
-    "whatsNew": "Redesigned the quick palette as a 10x4 memo inventory.\nAdded open and stored state indicators for memo icons.\nAdded drag-and-drop ordering for palette memo icons.\nRefined text and image memo window controls.\nImproved image memo initial sizing and quick palette shortcut settings.",
+    "promotionalText": "Open text and image memos from a quick palette. See what is open or stored at a glance, then keep the references you need beside your Mac workspace.",
+    "fullDescription": "SpacePin is a menu bar app that keeps text and image memos close to your Mac workspace.\n\nPress Shift + Command + Space to open the quick palette, create a memo, or bring a stored memo back from a 10x4 inventory-style palette. Open memos are marked with a white dot, so you can see what is already on screen and what is stored at a glance.\n\nUse SpacePin for checklists, image references, temporary notes, and anything you want beside the app you are using. Memos can be moved, resized, collapsed into the palette, restored later, and brought back to the front when needed.\n\nSpacePin helps keep memos available across desktop Spaces and can bring all memos forward together, including in supported full-screen contexts. Memo content and imported images are stored locally on your Mac.",
+    "whatsNew": "Redesigned the quick palette into a 10x4 memo inventory.\nAdded white-dot indicators so open memos are easier to distinguish from stored memos.\nAdded drag-and-drop ordering for memo icons in the palette.\nRefined memo header controls, title editing, icon display, and Mac-style window buttons.\nImproved initial sizing for large image memos.\nAdded support for changing the quick palette keyboard shortcut.",
     "reviewNotes": "SpacePin is a menu bar utility for macOS. Open it from the menu bar icon or press Shift + Command + Space, then use New Text Memo or New Image Memo to create floating memos. The floating windows are implemented with public AppKit NSPanel APIs."
   },
   "ja": {
     "subtitle": "メモをすぐ呼び出し",
-    "keywords": "メモ,ノート,画像,付箋,固定,Spaces,パレット",
+    "keywords": "メモ,ノート,付箋,画像,フローティング,デスクトップ,Spaces,パレット,リファレンス,作業効率",
     "shortDescription": "クイックパレットから、テキストメモと画像メモをすぐ呼び出せます。",
-    "fullDescription": "SpacePin は、作業中に必要なテキストメモや画像メモを画面のそばに置いておける軽量なメニューバーアプリです。\n\nShift + Command + Space でクイックパレットを開き、新しいメモを作成したり、収納済みのメモを10x4のパレットから呼び戻したりできます。各メモは小さなフローティングウィンドウとして開き、移動、サイズ変更、収納、再表示に対応します。\n\nチェックリスト、参考画像、一時メモを今使っているアプリのそばに置きたいときに使えます。メモの内容と画像はMac上にローカル保存されます。",
-    "whatsNew": "クイックパレットを10x4のメモインベントリとして刷新しました。\n開いているメモと収納済みメモの状態表示を追加しました。\nパレット上のメモをドラッグ＆ドロップで並べ替えられるようにしました。\nテキストメモと画像メモのヘッダ操作を改善しました。\nクイックパレットのショートカット変更に対応しました。",
+    "promotionalText": "クイックパレットからテキスト・画像メモをすぐ呼び出し。開いているメモと収納済みメモを一目で確認し、必要な情報を作業画面のそばに置いておけます。",
+    "fullDescription": "SpacePin は、テキストメモや画像メモを Mac の作業画面のそばに置いておけるメニューバーアプリです。\n\nShift + Command + Space でクイックパレットを開き、新しいメモを作成したり、収納済みのメモを 10x4 のパレットから呼び戻したりできます。開いているメモは白いドットで表示されるため、画面上にあるメモと収納済みのメモを一目で確認できます。\n\nチェックリスト、参考画像、作業中だけ見ておきたい一時メモに向いています。メモは自由に移動・リサイズでき、パレットへ収納してから後で呼び戻せます。必要なときは、散らばったメモをまとめて前面に表示できます。\n\n通常のデスクトップ間でメモを使えるだけでなく、対応する全画面環境でも必要なメモをそばに置けます。メモの内容と画像は Mac 上にローカル保存されます。",
+    "whatsNew": "クイックパレットを 10x4 のメモインベントリとして刷新しました。\n開いているメモを白いドットで表示し、収納済みメモと見分けやすくしました。\nパレット上のメモアイコンをドラッグ＆ドロップで並べ替えられるようにしました。\nメモのヘッダ操作、タイトル編集、アイコン表示、Mac らしいウィンドウボタンを改善しました。\n大きな画像を読み込んだときの初期表示サイズを改善しました。\nクイックパレットを開くショートカットを変更できるようにしました。",
     "reviewNotes": "SpacePin は macOS 用のメニューバーユーティリティです。メニューバーアイコン、または Shift + Command + Space で開き、［新規テキストメモ］または［新規画像メモ］でフローティングメモを作成してください。フローティングウィンドウは公開 AppKit の NSPanel API で実装しています。"
   },
   "fr": {
