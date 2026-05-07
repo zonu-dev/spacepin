@@ -85,13 +85,13 @@ Then fill in:
 
 ## Screenshots
 
-Prepare macOS screenshots that show:
+Use the prepared macOS screenshots in this order:
 
-- Menu bar entry point
-- A note pin being edited
-- An image pin floating above other work
-- Manager window controls
-- Multiple pins across the desktop
+1. `docs/screenshots/spacepin-1.png` — Quick palette entry point
+2. `docs/screenshots/spacepin-2.png` — Text and image memos near the workspace
+3. `docs/screenshots/spacepin-3.png` — Memos pinned above a full-screen app
+4. `docs/screenshots/spacepin-4.png` — Bring all memos forward across desktops
+5. `docs/screenshots/spacepin-5.png` — Open and stored memo state indicators
 
 ## Review Notes Draft
 
@@ -99,8 +99,12 @@ Use a short note similar to this:
 
 > SpacePin is a menu bar utility for macOS. The app does not present a Dock icon during normal use. Open it from the menu bar icon, then use `New Note Pin` or `Import Image…` to create floating pins. The floating windows are implemented with public AppKit `NSPanel` APIs.
 
+Updated version:
+
+> SpacePin is a menu bar utility for macOS. The app does not present a Dock icon during normal use. Open it from the menu bar icon or press Shift + Command + Space, then use `New Text Memo` or `New Image Memo` to create floating memos. The floating windows are implemented with public AppKit `NSPanel` APIs.
+
 ## Remaining Non-Code Inputs
 
 - Public Privacy Policy URL on `zoochigames.com`
-- Final screenshots for each storefront language you decide to upload
+- Final screenshots in `docs/screenshots/spacepin-1.png` through `docs/screenshots/spacepin-5.png`
 - App Store Connect copy from `docs/app-store-metadata-localizations.json`

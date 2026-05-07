@@ -8,43 +8,52 @@ Localized variants for the current runtime locale set are available in [app-stor
 
 ## Subtitle Candidates
 
-- Pin notes and images across Spaces
-- Floating notes and images for Mac
-- Keep notes and images always nearby
+- Memo palette for your Mac
+- Quick memos across Spaces
+- Text and image memos nearby
 
 ## Keywords
 
-`notes,pin,sticky,image,floating,desktop,spaces,overlay,reference,productivity`
+`memo,notes,image,sticky,floating,desktop,spaces,overlay,palette,reference`
 
 ## Short Description Draft
 
-SpacePin lets you pin notes and images in small floating windows that stay available across macOS Spaces. Keep reference material, reminders, and visual snippets nearby without switching back and forth between apps.
+SpacePin opens a quick palette for keeping text and image memos close while you work across macOS Spaces.
 
 ## Full Description Draft
 
-SpacePin is a lightweight macOS menu bar utility for keeping important notes and images visible while you work.
+SpacePin is a lightweight menu bar app for keeping text and image memos close while you work.
 
-Create note pins for quick text reminders, or import images as visual reference pins. Each pin opens in a compact floating window that you can move, resize, lock, collapse, duplicate, and keep across Spaces.
+Open the quick palette with Shift + Command + Space, create text or image memos, and bring stored memos back to the front from a 10x4 inventory-style palette. Memos open as compact floating panels that you can move, resize, collapse into the palette, and restore after relaunch.
 
-SpacePin is designed for workflows where you need information to stay close at hand:
+SpacePin is designed for workflows where small pieces of information need to stay close at hand:
 
 - Keep checklists and reminders visible
-- Pin image references while designing or writing
-- Place multiple notes and images around your workspace
-- Adjust opacity and click-through behavior to fit your setup
-- Restore your pins after relaunch
+- Keep image references beside your current app
+- Store and recall memos from the quick palette
+- Bring all memos to the front across Spaces
+- Restore memo text, images, position, and size after relaunch
 
 Key features:
 
-- Create editable note pins
-- Import image pins from files
-- Show multiple pins at once
-- Move and resize each pin freely
-- Keep pins visible across macOS Spaces
-- Lock, collapse, duplicate, and remove pins
-- Restore note text, image references, size, and position after restart
+- Create text memos
+- Create image memos from files
+- Open the quick palette with a customizable shortcut
+- Arrange memo icons in a 10x4 palette
+- Show whether each memo is open or stored
+- Move and resize each memo freely
+- Collapse memos back into the palette
+- Bring all memos to the front
 
 SpacePin uses native macOS windowing with public system APIs and is built to feel lightweight and unobtrusive.
+
+## What's New Draft
+
+Redesigned the quick palette as a 10x4 memo inventory.
+Added open and stored state indicators for memo icons.
+Added drag-and-drop ordering for palette memo icons.
+Refined text and image memo window controls.
+Improved image memo initial sizing and quick palette shortcut settings.
 
 ## Privacy Position
 
@@ -70,11 +79,12 @@ How to review:
 
 1. Launch the app.
 2. Click the menu bar icon for SpacePin.
-3. Use `New Note Pin` to create a note, or `Import Image…` to create an image pin.
-4. Use `Open Manager` for additional controls such as opacity, lock, color, and font size.
+3. Use `New Text Memo` to create a text memo, or `New Image Memo` to create an image memo.
+4. Use `Open Manager` for additional controls.
 
 Notes:
 
 - The app normally runs without a Dock icon.
+- The quick palette can also be opened with Shift + Command + Space by default.
 - The floating windows are implemented with public AppKit `NSPanel` APIs.
-- The app stores note and image pin state locally on the device.
+- The app stores memo state locally on the device.

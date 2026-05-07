@@ -613,15 +613,18 @@ private final class SettingsWindowController: NSWindowController, NSWindowDelega
 @MainActor
 private final class QuickPaletteWindowController: NSWindowController, DockDropTarget {
     private enum Metrics {
-        static let width: CGFloat = 700
-        static let height: CGFloat = 388
+        static let width: CGFloat = 780
+        static let height: CGFloat = 510
         static let screenMargin: CGFloat = 24
         static let dropExpansion: CGFloat = 24
         static let columns = 10
         static let slotCount = 40
-        static let slotSize: CGFloat = 54
-        static let slotSpacing: CGFloat = 8
-        static let iconFrameSize: CGFloat = 54
+        static let slotSize: CGFloat = 60
+        static let cellWidth: CGFloat = 60
+        static let cellHeight: CGFloat = 72
+        static let columnSpacing: CGFloat = 10
+        static let rowSpacing: CGFloat = 18
+        static let iconFrameSize: CGFloat = 60
         static let contentPadding: CGFloat = 18
         static let headerHeight: CGFloat = 24
         static let sectionSpacing: CGFloat = 12
@@ -880,19 +883,20 @@ private final class QuickPaletteWindowController: NSWindowController, DockDropTa
     private func fallbackIconFrame(forInventoryIndex index: Int, in panelFrame: CGRect) -> CGRect {
         let column = CGFloat(index % Metrics.columns)
         let row = CGFloat(index / Metrics.columns)
-        let slotPitch = Metrics.slotSize + Metrics.slotSpacing
+        let horizontalPitch = Metrics.cellWidth + Metrics.columnSpacing
+        let verticalPitch = Metrics.cellHeight + Metrics.rowSpacing
         let slotCenterX = panelFrame.minX
             + Metrics.contentPadding
             + Metrics.gridPadding
-            + (Metrics.slotSize / 2)
-            + (column * slotPitch)
+            + (Metrics.cellWidth / 2)
+            + (column * horizontalPitch)
         let slotCenterY = panelFrame.maxY
             - Metrics.contentPadding
             - Metrics.headerHeight
             - Metrics.sectionSpacing
             - Metrics.gridPadding
             - (Metrics.slotSize / 2)
-            - (row * slotPitch)
+            - (row * verticalPitch)
 
         return CGRect(
             x: slotCenterX - (Metrics.iconFrameSize / 2),
@@ -908,8 +912,11 @@ private struct QuickPaletteView: View {
         static let columns = 10
         static let rows = 4
         static let slotCount = columns * rows
-        static let slotSize: CGFloat = 54
-        static let slotSpacing: CGFloat = 8
+        static let slotSize: CGFloat = 60
+        static let cellWidth: CGFloat = 60
+        static let cellHeight: CGFloat = 72
+        static let columnSpacing: CGFloat = 10
+        static let rowSpacing: CGFloat = 18
     }
 
     @ObservedObject var coordinator: AppCoordinator
@@ -944,14 +951,25 @@ private struct QuickPaletteView: View {
 
     private var columns: [GridItem] {
         Array(
-            repeating: GridItem(.fixed(Metrics.slotSize), spacing: Metrics.slotSpacing),
+            repeating: GridItem(.fixed(Metrics.cellWidth), spacing: Metrics.columnSpacing),
             count: Metrics.columns
         )
     }
 
     var body: some View {
         ZStack {
-            DockVisualEffectView(material: .hudWindow)
+            DockVisualEffectView(material: .popover)
+
+            LinearGradient(
+                colors: [
+                    Color(red: 0.92, green: 0.86, blue: 0.66).opacity(0.10),
+                    Color(red: 0.58, green: 0.78, blue: 0.70).opacity(0.08),
+                    Color(red: 0.70, green: 0.60, blue: 0.82).opacity(0.07),
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .allowsHitTesting(false)
 
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 12) {
@@ -972,7 +990,7 @@ private struct QuickPaletteView: View {
                 }
 
                 ZStack(alignment: .topLeading) {
-                    LazyVGrid(columns: columns, spacing: Metrics.slotSpacing) {
+                    LazyVGrid(columns: columns, spacing: Metrics.rowSpacing) {
                         ForEach(0..<Metrics.slotCount, id: \.self) { index in
                             if let item = inventorySlots[index] {
                                 let isDragging = draggedPinID == item.id
@@ -1032,11 +1050,21 @@ private struct QuickPaletteView: View {
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .fill(Color.primary.opacity(0.055))
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color.white.opacity(0.105),
+                                    Color(red: 0.70, green: 0.88, blue: 0.78).opacity(0.050),
+                                    Color(red: 0.93, green: 0.82, blue: 0.56).opacity(0.035),
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(Color.primary.opacity(0.10), lineWidth: 1)
+                        .stroke(Color.white.opacity(0.18), lineWidth: 1)
                 )
 
                 HStack(alignment: .bottom, spacing: 8) {
@@ -1060,11 +1088,9 @@ private struct QuickPaletteView: View {
 
                     QuickPaletteActionButton(
                         systemName: "rectangle.stack",
-                        title: L10n.text("action.bring_forward_short", fallback: "Front"),
+                        title: L10n.text("action.bring_all_forward_short", fallback: "All Memos Front"),
                         action: onBringAllPinsForward
                     )
-
-                    Spacer(minLength: 0)
                 }
             }
             .padding(18)
@@ -1072,30 +1098,32 @@ private struct QuickPaletteView: View {
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(Color.primary.opacity(0.12), lineWidth: 1)
+                .stroke(Color.white.opacity(0.18), lineWidth: 1)
         )
     }
 
     private func targetIndex(forSourceIndex sourceIndex: Int, translation: CGSize) -> Int {
-        let pitch = Metrics.slotSize + Metrics.slotSpacing
+        let horizontalPitch = Metrics.cellWidth + Metrics.columnSpacing
+        let verticalPitch = Metrics.cellHeight + Metrics.rowSpacing
         let sourceColumn = sourceIndex % Metrics.columns
         let sourceRow = sourceIndex / Metrics.columns
         let targetColumn = max(
             0,
-            min(Metrics.columns - 1, sourceColumn + Int((translation.width / pitch).rounded()))
+            min(Metrics.columns - 1, sourceColumn + Int((translation.width / horizontalPitch).rounded()))
         )
         let targetRow = max(
             0,
-            min(Metrics.rows - 1, sourceRow + Int((translation.height / pitch).rounded()))
+            min(Metrics.rows - 1, sourceRow + Int((translation.height / verticalPitch).rounded()))
         )
         return (targetRow * Metrics.columns) + targetColumn
     }
 
     private func iconOrigin(forInventoryIndex index: Int) -> CGPoint {
-        let pitch = Metrics.slotSize + Metrics.slotSpacing
+        let horizontalPitch = Metrics.cellWidth + Metrics.columnSpacing
+        let verticalPitch = Metrics.cellHeight + Metrics.rowSpacing
         return CGPoint(
-            x: CGFloat(index % Metrics.columns) * pitch,
-            y: CGFloat(index / Metrics.columns) * pitch
+            x: CGFloat(index % Metrics.columns) * horizontalPitch,
+            y: CGFloat(index / Metrics.columns) * verticalPitch
         )
     }
 
@@ -1131,14 +1159,15 @@ private struct QuickPaletteActionButton: View {
             }
             .foregroundStyle(.primary)
             .padding(.horizontal, 8)
-            .frame(width: 156, height: 50)
+            .frame(maxWidth: .infinity)
+            .frame(height: 50)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color.primary.opacity(isHovered ? 0.12 : 0.075))
+                    .fill(Color.white.opacity(isHovered ? 0.17 : 0.105))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(Color.primary.opacity(0.12), lineWidth: 1)
+                    .stroke(Color.white.opacity(isHovered ? 0.26 : 0.18), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
@@ -1219,103 +1248,106 @@ private struct QuickPaletteInventoryIcon: View {
     }
 
     private var outerIconShape: some InsettableShape {
-        RoundedRectangle(cornerRadius: isOpen ? 15 : 14, style: .continuous)
+        RoundedRectangle(cornerRadius: 14, style: .continuous)
     }
 
     private var innerIconShape: some InsettableShape {
-        RoundedRectangle(cornerRadius: isOpen ? 11 : 10, style: .continuous)
+        RoundedRectangle(cornerRadius: 10, style: .continuous)
     }
 
     var body: some View {
-        ZStack {
-            slotShape
-                .fill(Color.primary.opacity(isOpen ? 0.030 : 0.060))
-                .overlay(
+        VStack(spacing: 5) {
+            ZStack {
+                slotShape
+                    .fill(slotFill)
+                    .overlay(
+                        slotShape
+                            .stroke(slotStroke, lineWidth: 1)
+                    )
+                    .shadow(
+                        color: Color.black.opacity(0.07),
+                        radius: 3,
+                        x: 0,
+                        y: 1
+                    )
+
+                outerIconShape
+                    .fill(Color(nsColor: theme.headerBackground).opacity(isHovered ? 1.0 : 0.94))
+                    .overlay(
+                        outerIconShape
+                            .stroke(
+                                Color(nsColor: theme.swatch).opacity(isHovered ? 0.94 : 0.78),
+                                lineWidth: 1.4
+                            )
+                    )
+                    .shadow(
+                        color: Color(nsColor: theme.swatch).opacity(isHovered ? 0.28 : 0.18),
+                        radius: isHovered ? 7 : 5,
+                        x: 0,
+                        y: 3
+                    )
+                    .frame(width: 60, height: 60)
+
+                innerIconShape
+                    .fill(Color(nsColor: theme.bodyBackground).opacity(0.96))
+                    .overlay(
+                        innerIconShape
+                            .stroke(Color(nsColor: theme.swatch).opacity(0.76), lineWidth: 1)
+                    )
+                    .frame(width: 46, height: 46)
+
+                if item.record.headerIconMode == .titleInitial {
+                    Text(item.record.localizedHeaderMonogram)
+                        .font(.system(size: 21, weight: .bold, design: .rounded))
+                        .foregroundStyle(Color(nsColor: theme.bodyText))
+                } else {
+                    Image(systemName: item.record.headerIconSymbolName)
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(Color(nsColor: theme.bodyText))
+                }
+            }
+            .frame(width: 60, height: 60)
+            .overlay(alignment: .topTrailing) {
+                if item.record.kind == .image {
+                    Image(systemName: "photo.fill")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: 20, height: 17)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(Color.accentColor.opacity(0.92))
+                        )
+                        .offset(x: 6, y: -4)
+                }
+            }
+            .overlay {
+                if isDropTarget {
                     slotShape
-                        .stroke(Color.primary.opacity(isOpen ? 0.060 : 0.110), lineWidth: 1)
-                )
-                .shadow(
-                    color: Color.black.opacity(isOpen ? 0.02 : 0.08),
-                    radius: isOpen ? 0 : 3,
-                    x: 0,
-                    y: isOpen ? 0 : 1
-                )
+                        .stroke(Color.accentColor.opacity(0.82), style: StrokeStyle(lineWidth: 2, dash: [5, 3]))
+                        .frame(width: 60, height: 60)
+                }
+            }
 
             if isOpen {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(nsColor: theme.bodyBackground).opacity(0.72))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(Color(nsColor: theme.swatch).opacity(0.34), lineWidth: 1)
-                    )
-                    .frame(width: 40, height: 36)
-                    .offset(x: 4, y: 5)
-                    .shadow(color: Color.black.opacity(0.16), radius: 5, x: 0, y: 3)
-            }
-
-            outerIconShape
-                .fill(Color(nsColor: theme.headerBackground).opacity(isOpen ? 1.0 : 0.90))
-                .overlay(
-                    outerIconShape
-                        .stroke(
-                            Color(nsColor: theme.swatch).opacity(
-                                isOpen ? (isHovered ? 0.96 : 0.78) : (isHovered ? 0.58 : 0.38)
-                            ),
-                            lineWidth: isOpen ? 1.7 : 1.2
-                        )
-                )
-                .shadow(
-                    color: Color(nsColor: theme.swatch).opacity(isOpen ? (isHovered ? 0.26 : 0.18) : 0.03),
-                    radius: isOpen ? (isHovered ? 7 : 5) : 1,
-                    x: 0,
-                    y: isOpen ? 4 : 1
-                )
-                .frame(width: isOpen ? 50 : 48, height: isOpen ? 50 : 48)
-                .offset(y: isOpen ? -3 : 0)
-
-            innerIconShape
-                .fill(Color(nsColor: theme.bodyBackground).opacity(isOpen ? 1.0 : 0.92))
-                .overlay(
-                    innerIconShape
-                        .stroke(Color(nsColor: theme.swatch).opacity(isOpen ? 0.88 : 0.40), lineWidth: 1)
-                )
-                .frame(width: isOpen ? 38 : 36, height: isOpen ? 38 : 36)
-                .offset(y: isOpen ? -3 : 0)
-
-            if item.record.headerIconMode == .titleInitial {
-                Text(item.record.localizedHeaderMonogram)
-                    .font(.system(size: isOpen ? 18 : 17, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color(nsColor: theme.bodyText).opacity(isOpen ? 1.0 : 0.78))
-                    .offset(y: isOpen ? -3 : 0)
+                Circle()
+                    .fill(Color.white.opacity(0.88))
+                    .frame(width: 7, height: 7)
+                    .shadow(color: Color.black.opacity(0.36), radius: 1.5, x: 0, y: 1)
             } else {
-                Image(systemName: item.record.headerIconSymbolName)
-                    .font(.system(size: isOpen ? 17 : 16, weight: .semibold))
-                    .foregroundStyle(Color(nsColor: theme.bodyText).opacity(isOpen ? 1.0 : 0.74))
-                    .offset(y: isOpen ? -3 : 0)
+                Color.clear
+                    .frame(width: 7, height: 7)
             }
         }
-        .frame(width: 54, height: 54)
-        .contentShape(slotShape)
-        .overlay {
-            if isDropTarget {
-                slotShape
-                    .stroke(Color.accentColor.opacity(0.82), style: StrokeStyle(lineWidth: 2, dash: [5, 3]))
-                    .frame(width: 54, height: 54)
-            }
-        }
-        .overlay(alignment: .bottomTrailing) {
-            if item.record.kind == .image {
-                Image(systemName: "photo.fill")
-                    .font(.system(size: 8, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(width: 16, height: 13)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4, style: .continuous)
-                            .fill(Color.accentColor.opacity(isOpen ? 0.95 : 0.62))
-                    )
-                    .offset(x: 0, y: 0)
-            }
-        }
+        .frame(width: 60, height: 72, alignment: .top)
+        .contentShape(Rectangle())
+    }
+
+    private var slotFill: Color {
+        Color.black.opacity(isHovered ? 0.105 : 0.075)
+    }
+
+    private var slotStroke: Color {
+        return Color.white.opacity(isHovered ? 0.17 : 0.11)
     }
 }
 
@@ -1327,16 +1359,22 @@ private struct QuickPaletteEmptySlot: View {
     }
 
     var body: some View {
-        slotShape
-            .fill(Color.primary.opacity(isDropTarget ? 0.075 : 0.035))
-            .overlay(
-                slotShape
-                    .stroke(
-                        isDropTarget ? Color.accentColor.opacity(0.82) : Color.primary.opacity(0.055),
-                        style: StrokeStyle(lineWidth: isDropTarget ? 2 : 1, dash: isDropTarget ? [5, 3] : [])
-                    )
-            )
-            .frame(width: 54, height: 54)
+        VStack(spacing: 5) {
+            slotShape
+                .fill(isDropTarget ? Color.accentColor.opacity(0.12) : Color.black.opacity(0.050))
+                .overlay(
+                    slotShape
+                        .stroke(
+                            isDropTarget ? Color.accentColor.opacity(0.82) : Color.white.opacity(0.090),
+                            style: StrokeStyle(lineWidth: isDropTarget ? 2 : 1, dash: isDropTarget ? [5, 3] : [])
+                        )
+                )
+                .frame(width: 60, height: 60)
+
+            Color.clear
+                .frame(width: 7, height: 7)
+        }
+        .frame(width: 60, height: 72, alignment: .top)
     }
 }
 
